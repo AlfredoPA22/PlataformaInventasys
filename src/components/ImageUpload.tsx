@@ -1,6 +1,5 @@
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { Label } from "@/components/ui/label";
 
 interface ImageUploadProps {
   label: string;
@@ -9,7 +8,7 @@ interface ImageUploadProps {
   onChange: (url: string) => void;
 }
 
-const ImageUpload = ({ label, name, value, onChange }: ImageUploadProps) => {
+const ImageUpload = ({ label, name }: ImageUploadProps) => {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
