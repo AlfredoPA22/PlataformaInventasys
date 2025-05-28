@@ -9,17 +9,17 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 // Imágenes del sistema
-import compras from "@/assets/COMPRAS.png";
-import dashboard from "@/assets/DASHBOARD.png";
-import detalleCompra from "@/assets/DETALLE DE COMPRA.png";
-import detalleVenta from "@/assets/DETALLE DE VENTA.png";
-import home from "@/assets/home.png";
-import inventario from "@/assets/INVENTARIO.png";
-import pagos from "@/assets/PAGOS.png";
-import permisos from "@/assets/PERMISOS.png";
-import roles from "@/assets/ROLES.png";
-import usuarios from "@/assets/USUARIOS.png";
-import ventas from "@/assets/VENTAS.png";
+import compras from "../../assets/compras.png";
+import dashboard from "../../assets/DASHBOARD.png";
+import detalleCompra from "../../assets/DETALLE DE COMPRA.png";
+import detalleVenta from "../../assets/DETALLE DE VENTA.png";
+import home from "../../assets/home.png";
+import inventario from "../../assets/INVENTARIO.png";
+import pagos from "../../assets/PAGOS.png";
+import permisos from "../../assets/PERMISOS.png";
+import roles from "../../assets/ROLES.png";
+import usuarios from "../../assets/USUARIOS.png";
+import ventas from "../../assets//VENTAS.png";
 
 const SystemDetail: React.FC = () => {
   return (
@@ -34,7 +34,12 @@ const SystemDetail: React.FC = () => {
           {/* Introducción */}
           <section className="text-gray-700">
             <p className="text-lg">
-              <strong>Inventasys</strong> es una plataforma SaaS desarrollada para la gestión integral de inventarios, compras, ventas, usuarios y almacenes. Pensado para pequeñas y medianas empresas, el sistema ofrece un entorno moderno, accesible y escalable para digitalizar operaciones y tomar decisiones estratégicas con base en datos en tiempo real.
+              <strong>Inventasys</strong> es una plataforma SaaS desarrollada
+              para la gestión integral de inventarios, compras, ventas, usuarios
+              y almacenes. Pensado para pequeñas y medianas empresas, el sistema
+              ofrece un entorno moderno, accesible y escalable para digitalizar
+              operaciones y tomar decisiones estratégicas con base en datos en
+              tiempo real.
             </p>
           </section>
 
@@ -49,10 +54,20 @@ const SystemDetail: React.FC = () => {
               <ul className="list-disc pl-6 space-y-2 text-gray-700">
                 <li>Gestión de productos serializados y no serializados</li>
                 <li>Módulo de compras con control de stock por lote</li>
-                <li>Ventas con control de crédito, pagos parciales y estados</li>
-                <li>Transferencias entre almacenes con validación de disponibilidad</li>
-                <li>Reportes dinámicos con filtros por fecha, marca, categoría y cliente</li>
-                <li>Panel administrativo con acceso a métricas y KPIs de ventas</li>
+                <li>
+                  Ventas con control de crédito, pagos parciales y estados
+                </li>
+                <li>
+                  Transferencias entre almacenes con validación de
+                  disponibilidad
+                </li>
+                <li>
+                  Reportes dinámicos con filtros por fecha, marca, categoría y
+                  cliente
+                </li>
+                <li>
+                  Panel administrativo con acceso a métricas y KPIs de ventas
+                </li>
                 <li>Soporte para múltiples empresas y múltiples almacenes</li>
                 <li>Control de usuarios por roles y permisos detallados</li>
               </ul>
@@ -76,7 +91,10 @@ const SystemDetail: React.FC = () => {
                 Control de inventario y stock
               </h2>
               <p className="text-gray-700">
-                Visualizá la disponibilidad por almacén en tiempo real. El sistema actualiza automáticamente el stock al registrar compras, ventas o transferencias, ofreciendo trazabilidad por número de serie o por lote según corresponda.
+                Visualizá la disponibilidad por almacén en tiempo real. El
+                sistema actualiza automáticamente el stock al registrar compras,
+                ventas o transferencias, ofreciendo trazabilidad por número de
+                serie o por lote según corresponda.
               </p>
             </div>
           </section>
@@ -88,7 +106,10 @@ const SystemDetail: React.FC = () => {
                 Reportes exportables
               </h2>
               <p className="text-gray-700">
-                Generá informes detallados en formato PDF sobre ventas, compras, inventario, productos más vendidos y estados de clientes. Usá los filtros inteligentes para obtener la información exacta que necesitás.
+                Generá informes detallados en formato PDF sobre ventas, compras,
+                inventario, productos más vendidos y estados de clientes. Usá
+                los filtros inteligentes para obtener la información exacta que
+                necesitás.
               </p>
             </div>
             <img
@@ -110,7 +131,9 @@ const SystemDetail: React.FC = () => {
                 Control de acceso y roles
               </h2>
               <p className="text-gray-700">
-                Creá usuarios con diferentes niveles de acceso según su rol. Definí permisos específicos para cada módulo y mantené segura la información de la empresa en todo momento.
+                Creá usuarios con diferentes niveles de acceso según su rol.
+                Definí permisos específicos para cada módulo y mantené segura la
+                información de la empresa en todo momento.
               </p>
             </div>
           </section>
