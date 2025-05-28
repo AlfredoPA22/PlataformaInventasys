@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import {
   Carousel,
   CarouselContent,
@@ -7,9 +6,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Separator } from "@/components/ui/separator";
 
 // Imágenes del sistema
-import cliente from "@/assets/CLIENTE.png";
 import compras from "@/assets/COMPRAS.png";
 import dashboard from "@/assets/DASHBOARD.png";
 import detalleCompra from "@/assets/DETALLE DE COMPRA.png";
@@ -125,7 +124,6 @@ const SystemDetail: React.FC = () => {
               <CarouselContent>
                 {[
                   home,
-                  cliente,
                   compras,
                   pagos,
                   detalleCompra,
