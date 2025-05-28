@@ -8,19 +8,6 @@ import {
 } from "@/components/ui/carousel";
 import { Separator } from "@/components/ui/separator";
 
-// Imágenes del sistema
-import compras from "../../assets/compras.png";
-import dashboard from "../../assets/DASHBOARD.png";
-import detalleCompra from "../../assets/DETALLE DE COMPRA.png";
-import detalleVenta from "../../assets/DETALLE DE VENTA.png";
-import home from "../../assets/home.png";
-import inventario from "../../assets/INVENTARIO.png";
-import pagos from "../../assets/PAGOS.png";
-import permisos from "../../assets/PERMISOS.png";
-import roles from "../../assets/ROLES.png";
-import usuarios from "../../assets/USUARIOS.png";
-import ventas from "../../assets//VENTAS.png";
-
 const SystemDetail: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-2 py-5">
@@ -73,7 +60,7 @@ const SystemDetail: React.FC = () => {
               </ul>
             </div>
             <img
-              src={dashboard}
+              src="https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412864/MyManag/assets/ruozowu0hae7q6jalbmz.png"
               alt="Dashboard"
               className="rounded-lg shadow-md"
             />
@@ -82,7 +69,7 @@ const SystemDetail: React.FC = () => {
           {/* Inventario y stock */}
           <section className="grid md:grid-cols-2 gap-8 items-center">
             <img
-              src={inventario}
+              src="https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412866/MyManag/assets/abogfnyzmhuwckcbhgpx.png"
               alt="Inventario"
               className="rounded-lg shadow-md"
             />
@@ -113,7 +100,7 @@ const SystemDetail: React.FC = () => {
               </p>
             </div>
             <img
-              src={detalleVenta}
+              src="https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412863/MyManag/assets/u0jemxwhrgbmxxyxxpqv.png"
               alt="Detalle de Venta"
               className="rounded-lg shadow-md"
             />
@@ -122,7 +109,7 @@ const SystemDetail: React.FC = () => {
           {/* Gestión de usuarios y permisos */}
           <section className="grid md:grid-cols-2 gap-8 items-center">
             <img
-              src={usuarios}
+              src="https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412864/MyManag/assets/o1xjrujgfinukcfuq1ct.png"
               alt="Usuarios"
               className="rounded-lg shadow-md"
             />
@@ -146,13 +133,13 @@ const SystemDetail: React.FC = () => {
             <Carousel className="w-full max-w-4xl mx-auto">
               <CarouselContent>
                 {[
-                  home,
-                  compras,
-                  pagos,
-                  detalleCompra,
-                  roles,
-                  permisos,
-                  ventas,
+                  "https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412863/MyManag/assets/hlxvfxszxi5kn4ldubwb.png",
+                  "https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412864/MyManag/assets/vaeesgrpjuvpy70c4ydr.png",
+                  "https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412863/MyManag/assets/r5quy2yaloxeerlvctni.png",
+                  "https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412864/MyManag/assets/ss4oiqthkfjvt7urlnff.png",
+                  "https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412863/MyManag/assets/b4ixxzejvumympiautiz.png",
+                  "https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412865/MyManag/assets/ki9tapglzbggvzyiy4jw.png",
+                  "https://res.cloudinary.com/dbt5vgimv/image/upload/v1748412864/MyManag/assets/chupex1ndzdq4dtjrxxs.png",
                 ].map((img, idx) => (
                   <CarouselItem
                     key={idx}
