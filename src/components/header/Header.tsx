@@ -60,7 +60,7 @@ const Header: React.FC = () => {
           {user.isAuthenticated && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="rounded-full border-2 border-transparent hover:border-blue-600 transition">
+                <button className="rounded-full border-2 border-transparent hover:border-blue-600 transition cursor-pointer">
                   <img
                     src={
                       user.picture ||
@@ -76,7 +76,7 @@ const Header: React.FC = () => {
                   {user.fullName}
                 </DropdownMenuLabel>
                 <DropdownMenuItem asChild>
-                  <Link to="/mi-cuenta" className="text-xs text-gray-500">
+                  <Link to="/mi-cuenta" className="text-xs text-gray-500 cursor-pointer">
                     Mi cuenta
                   </Link>
                 </DropdownMenuItem>

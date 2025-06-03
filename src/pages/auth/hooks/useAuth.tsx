@@ -48,7 +48,7 @@ const useAuth = () => {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.error(error);
+      toast.error(error.message);
     } finally {
       setLoadingLogin(false);
     }
@@ -83,7 +83,7 @@ const useAuth = () => {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.error(error);
+      toast.error(error.message);
       dispatch(setIsAuthenticated(false));
     }
   };

@@ -72,7 +72,7 @@ const PaymentByCompanyListAdmin = () => {
       setOpen(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.error(error);
+      toast.error(error.message);
     } finally {
       dispatch(setIsBlocked(false));
     }
@@ -91,7 +91,7 @@ const PaymentByCompanyListAdmin = () => {
       setOpen(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.error(error);
+      toast.error(error.message);
     } finally {
       dispatch(setIsBlocked(false));
     }

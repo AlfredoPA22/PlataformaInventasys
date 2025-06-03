@@ -1,4 +1,5 @@
 import { CompanyPlan } from "../enums/companyPlan.enum";
+import { pricePlanMock } from "./pricePlanMock";
 
 export const plansMock = [
   {
@@ -23,7 +24,7 @@ export const plansMock = [
   {
     id: CompanyPlan.BASIC,
     name: "Básico",
-    price: "59 Bs / mes",
+    price: `${pricePlanMock.basic}bs / mes`,
     description:
       "Ideal para pequeños negocios que requieren control completo de su inventario.",
     features: [
@@ -43,7 +44,7 @@ export const plansMock = [
   {
     id: CompanyPlan.PRO,
     name: "Pro",
-    price: "99 Bs / mes",
+    price: `${pricePlanMock.pro}bs / mes`,
     description:
       "Para empresas que necesitan control total, operaciones ilimitadas y soporte avanzado.",
     features: [

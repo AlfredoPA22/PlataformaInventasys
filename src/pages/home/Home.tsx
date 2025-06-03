@@ -22,7 +22,7 @@ const Home: React.FC = () => {
             productos, ventas y almacenes.
           </p>
           <Button
-            className="bg-yellow-300 text-gray-900 font-semibold py-3 px-6 rounded shadow hover:bg-yellow-400"
+            className="bg-yellow-300 text-gray-900 font-semibold py-3 px-6 rounded shadow hover:bg-yellow-400 cursor-pointer"
             onClick={() =>
               navigate(`/registrar-empresa?plan=${CompanyPlan.FREE}`)
             }
@@ -60,7 +60,7 @@ const Home: React.FC = () => {
             </CardHeader>
             <CardContent className="px-6 pb-6">
               <Button
-                className="w-full mt-4"
+                className="w-full mt-4 cursor-pointer"
                 onClick={() =>
                   navigate(`/registrar-empresa?plan=${CompanyPlan.FREE}`)
                 }

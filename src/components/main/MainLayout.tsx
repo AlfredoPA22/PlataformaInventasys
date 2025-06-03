@@ -4,9 +4,9 @@ import Header from "../header/Header";
 
 const MainLayout: React.FC = () => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <main>
+      <main className="flex-grow">
         <Outlet />
       </main>
       <Footer />

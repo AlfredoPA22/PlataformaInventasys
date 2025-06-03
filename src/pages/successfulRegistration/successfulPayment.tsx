@@ -63,7 +63,7 @@ const SuccessfulPayment = () => {
             credenciales al correo de la cuenta.
           </p>
 
-          <Button className="w-full" onClick={() => navigate("/")}>
+          <Button className="w-full cursor-pointer" onClick={() => navigate("/")}>
             Ir al inicio
           </Button>
         </CardContent>

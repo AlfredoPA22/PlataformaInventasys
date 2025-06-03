@@ -33,7 +33,7 @@ export default function SystemPlans() {
               ))}
             </ul>
             <Button
-              className="w-full mt-4"
+              className="w-full mt-4 cursor-pointer"
               onClick={() => handleStart(plan.id)}
             >
               Empezar con este plan

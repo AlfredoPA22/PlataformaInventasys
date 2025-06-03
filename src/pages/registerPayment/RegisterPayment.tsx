@@ -1,15 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CREATE_PAYMENT } from "@/graphql/mutations/Payment";
-import { useFormikForm } from "@/hooks/useFormikForm";
-import { CompanyPlan } from "@/utils/enums/companyPlan.enum";
-import { PaymentMethod } from "@/utils/enums/paymentMethod.enum";
-import type { IPaymentInput } from "@/utils/interfaces/Payment";
-import { useMutation } from "@apollo/client";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -17,18 +16,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { schemaFormRegisterPayment } from "./FormRegisterPaymentValidation";
-import { toast } from "sonner";
-import { uploadImage } from "@/utils/uploadImage";
+import { CREATE_PAYMENT } from "@/graphql/mutations/Payment";
+import { useFormikForm } from "@/hooks/useFormikForm";
+import { CompanyPlan } from "@/utils/enums/companyPlan.enum";
+import { PaymentMethod } from "@/utils/enums/paymentMethod.enum";
 import type { ICompany } from "@/utils/interfaces/Company";
+import type { IPaymentInput } from "@/utils/interfaces/Payment";
+import { pricePlanMock } from "@/utils/mock/pricePlanMock";
+import { uploadImage } from "@/utils/uploadImage";
+import { useMutation } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import QRImage from "../../assets/QRINVENTASYS.jpeg";
+import { schemaFormRegisterPayment } from "./FormRegisterPaymentValidation";
 
 const RegisterPayment = () => {
   const navigate = useNavigate();
@@ -52,7 +53,11 @@ const RegisterPayment = () => {
   const company = state!.company;
   const plan = state!.plan;
   const amount =
-    plan === CompanyPlan.BASIC ? 99 : plan === CompanyPlan.PRO ? 199 : 0;
+    plan === CompanyPlan.BASIC
+      ? pricePlanMock.basic
+      : plan === CompanyPlan.PRO
+      ? pricePlanMock.pro
+      : 0;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

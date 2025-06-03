@@ -26,6 +26,7 @@ import useCompanyList from "@/hooks/useCompanyList";
 import type { RootState } from "@/redux/store";
 import { CompanyPlan } from "@/utils/enums/companyPlan.enum";
 import { CompanyStatus } from "@/utils/enums/companyStatus.enum";
+import { PaymentStatus } from "@/utils/enums/paymentStatus.enum";
 import { getDate } from "@/utils/getDate";
 import type { ICompany, ICompanyWithPayment } from "@/utils/interfaces/Company";
 import { useState } from "react";
@@ -103,6 +104,7 @@ const MyAccount = () => {
             </h2>
             {listCompany.length > 0 && (
               <Button
+                className="cursor-pointer"
                 onClick={() => window.open("http://localhost:5174", "_blank")}
               >
                 Ir al sistema
@@ -177,6 +179,7 @@ const MyAccount = () => {
                       </TableCell>
                       <TableCell className="flex gap-2">
                         <Button
+                          className="cursor-pointer"
                           size="sm"
                           onClick={() => navigate(`/pagos/${company._id}`)}
                         >
@@ -186,8 +189,11 @@ const MyAccount = () => {
                           (company.status === CompanyStatus.PENDING &&
                             !company.latest_payment) ||
                           (days <= 3 && company.plan !== CompanyPlan.FREE)) &&
-                          company.plan !== CompanyPlan.FREE && (
+                          company.plan !== CompanyPlan.FREE &&
+                          company.latest_payment?.status !==
+                            PaymentStatus.REVIEW && (
                             <Button
+                              className="cursor-pointer"
                               size="sm"
                               onClick={() =>
                                 navigate("/pago", {
@@ -201,19 +207,24 @@ const MyAccount = () => {
                               Registrar Pago
                             </Button>
                           )}
-                        {company.plan !== CompanyPlan.PRO && (
-                          <Button
-                            size="sm"
-                            variant="secondary"
-                            onClick={() => {
-                              setSelectedCompany(company);
-                              const superiores = getSuperiorPlans(company.plan);
-                              setSelectedPlan(superiores[0]);
-                            }}
-                          >
-                            Cambiar de Plan
-                          </Button>
-                        )}
+                        {company.plan !== CompanyPlan.PRO &&
+                          company.latest_payment?.status !==
+                            PaymentStatus.REVIEW && (
+                            <Button
+                              className="cursor-pointer"
+                              size="sm"
+                              variant="secondary"
+                              onClick={() => {
+                                setSelectedCompany(company);
+                                const superiores = getSuperiorPlans(
+                                  company.plan
+                                );
+                                setSelectedPlan(superiores[0]);
+                              }}
+                            >
+                              Cambiar de Plan
+                            </Button>
+                          )}
                       </TableCell>
                     </TableRow>
                   );
@@ -248,6 +259,11 @@ const MyAccount = () => {
                 <p className="capitalize font-semibold">
                   {selectedCompany?.plan}
                 </p>
+              </div>
+
+              <div className="text-sm text-yellow-700 bg-yellow-100 border border-yellow-300 p-2 rounded-md">
+                Solo puedes cambiar a un plan superior. No es posible volver a
+                un plan anterior o inferior.
               </div>
 
               <div>
