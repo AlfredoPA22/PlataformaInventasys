@@ -22,7 +22,7 @@ export function LoginForm({ className }: { className?: string }) {
         </p>
       </div>
 
-      <div className="grid gap-6 mt-4">
+      <div className="grid gap-6 mt-4 justify-center">
         <GoogleLogin
           onSuccess={(credentialResponse) => {
             handleLogin(credentialResponse); // token de Google
