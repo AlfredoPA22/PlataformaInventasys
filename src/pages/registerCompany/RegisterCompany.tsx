@@ -13,44 +13,15 @@ import { CREATE_COMPANY } from "@/graphql/mutations/Company";
 import { useFormikForm } from "@/hooks/useFormikForm";
 import { CompanyPlan } from "@/utils/enums/companyPlan.enum";
 import type { ICompanyInput } from "@/utils/interfaces/Company";
+import { plansMock } from "@/utils/mock/planMock";
 import { useMutation } from "@apollo/client";
-import { schemaFormRegisterCompany } from "./FormRegisterCompanyValidation";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
+import { schemaFormRegisterCompany } from "./FormRegisterCompanyValidation";
 
 const RegisterCompany = () => {
   const navigate = useNavigate();
-  const planDetails: Record<
-    CompanyPlan,
-    { name: string; price: string; features: string[] }
-  > = {
-    prueba: {
-      name: "Gratis",
-      price: "0 Bs",
-      features: [
-        "1 Empresa",
-        "Usuarios ilimitados",
-        "1 Almacén",
-        "Soporte básico",
-      ],
-    },
-    basico: {
-      name: "Básico",
-      price: "99 Bs/mes",
-      features: [
-        "3 Empresas",
-        "Usuarios ilimitados",
-        "Multi-Almacén",
-        "Soporte prioritario",
-      ],
-    },
-    profesional: {
-      name: "Premium",
-      price: "199 Bs/mes",
-      features: ["Empresas ilimitadas", "Integraciones", "Soporte dedicado"],
-    },
-  };
 
   const [createCompany] = useMutation(CREATE_COMPANY);
 
@@ -143,28 +114,31 @@ const RegisterCompany = () => {
         </Card>
 
         {/* Información del plan (izquierda en desktop) */}
-        {detectedPlan && (
-          <Card className="bg-blue-50 border-blue-300 border shadow-md">
-            <CardContent className="p-6 space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="text-blue-600 text-2xl font-bold">💼</div>
-                <div>
-                  <h2 className="text-xl font-semibold text-blue-700">
-                    Plan Seleccionado: {planDetails[detectedPlan].name}
-                  </h2>
-                  <p className="text-sm text-blue-600">
-                    {planDetails[detectedPlan].price}
-                  </p>
-                </div>
-              </div>
-              <ul className="list-disc list-inside pl-4 text-blue-800 text-sm">
-                {planDetails[detectedPlan].features.map((feature, i) => (
-                  <li key={i}>{feature}</li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        )}
+        {detectedPlan &&
+          (() => {
+            const planInfo = plansMock.find((p) => p.id === detectedPlan);
+
+            return planInfo ? (
+              <Card className="bg-blue-50 border-blue-300 border shadow-md">
+                <CardContent className="p-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="text-blue-600 text-2xl font-bold">💼</div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-blue-700">
+                        Plan Seleccionado: {planInfo.name}
+                      </h2>
+                      <p className="text-sm text-blue-600">{planInfo.price}</p>
+                    </div>
+                  </div>
+                  <ul className="list-disc list-inside pl-4 text-blue-800 text-sm">
+                    {planInfo.features.map((feature, i) => (
+                      <li key={i}>{feature}</li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ) : null;
+          })()}
       </section>
 
       {/* Formulario (derecha en desktop) */}

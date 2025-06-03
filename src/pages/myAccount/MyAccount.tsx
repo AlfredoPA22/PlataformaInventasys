@@ -101,11 +101,13 @@ const MyAccount = () => {
             <h2 className="text-xl font-semibold text-gray-800">
               Empresas Asociadas
             </h2>
-            <Button
-              onClick={() => window.open("http://localhost:5174", "_blank")}
-            >
-              Ir al sistema
-            </Button>
+            {listCompany.length > 0 && (
+              <Button
+                onClick={() => window.open("http://localhost:5174", "_blank")}
+              >
+                Ir al sistema
+              </Button>
+            )}
           </div>
           {listCompany.length === 0 ? (
             <p className="text-gray-600">

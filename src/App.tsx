@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useSelector } from "react-redux";
 import type { RootState } from "./redux/store";
+import WhatsAppBubble from "./components/whatsapp/Whatsapp";
 
 function App() {
   const isBlocked = useSelector(
@@ -21,6 +22,7 @@ function App() {
         </DialogContent>
       </Dialog>
       <Toaster richColors />
+      <WhatsAppBubble/>
       <AppRoutes />
     </>
   );

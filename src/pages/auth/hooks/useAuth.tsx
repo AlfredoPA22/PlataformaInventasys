@@ -4,14 +4,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import type { RootState } from "@/redux/store";
-import store from "@/redux/store";
+import { LOGIN } from "@/graphql/mutations/User";
 import {
   resetAuth,
   setIsAuthenticated,
   setLogin,
 } from "@/redux/slices/authSlice";
-import { LOGIN } from "@/graphql/mutations/User";
+import type { RootState } from "@/redux/store";
+import store from "@/redux/store";
 import type { DecodedToken, ILoginInput } from "@/utils/interfaces/User";
 import { toast } from "sonner";
 
@@ -33,7 +33,6 @@ const useAuth = () => {
 
       if (token) {
         const decoded: DecodedToken = jwtDecode(token);
-        console.log(decoded)
         dispatch(
           setLogin({
             token,

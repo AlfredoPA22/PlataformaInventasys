@@ -12,6 +12,7 @@ import useAuth from "@/pages/auth/hooks/useAuth";
 import type { RootState } from "@/redux/store";
 import { CompanyPlan } from "@/utils/enums/companyPlan.enum";
 import { Menu } from "lucide-react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -19,6 +20,7 @@ const Header: React.FC = () => {
   const { logout } = useAuth();
 
   const user = useSelector((state: RootState) => state.authSlice);
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <header className="bg-white shadow-sm py-4 sticky top-0 z-50">
@@ -43,6 +45,12 @@ const Header: React.FC = () => {
             className="text-gray-700 hover:text-blue-600 transition"
           >
             Planes
+          </Link>
+          <Link
+            to="/contacto"
+            className="text-gray-700 hover:text-blue-600 transition"
+          >
+            Contacto
           </Link>
           <Button asChild className="bg-blue-600 text-white hover:bg-blue-700">
             <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
@@ -86,7 +94,7 @@ const Header: React.FC = () => {
 
         {/* Menú en mobile */}
         <div className="md:hidden">
-          <Sheet>
+          <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger>
               <Menu className="w-6 h-6 text-gray-700" />
             </SheetTrigger>
@@ -96,32 +104,59 @@ const Header: React.FC = () => {
               )}
               <Link
                 to="/"
+                onClick={() => setOpen(false)}
                 className="block text-lg text-gray-700 hover:text-blue-600"
               >
                 Inicio
               </Link>
               <Link
+                to="/mi-cuenta"
+                onClick={() => setOpen(false)}
+                className="block text-lg text-gray-700 hover:text-blue-600"
+              >
+                Mi cuenta
+              </Link>
+              <Link
                 to="/detalles-sistema"
+                onClick={() => setOpen(false)}
                 className="block text-lg text-gray-700 hover:text-blue-600"
               >
                 Detalles
               </Link>
               <Link
                 to="/planes-sistema"
+                onClick={() => setOpen(false)}
                 className="block text-lg text-gray-700 hover:text-blue-600"
               >
                 Planes
+              </Link>
+              <Link
+                to="/contacto"
+                onClick={() => setOpen(false)}
+                className="block text-lg text-gray-700 hover:text-blue-600"
+              >
+                Contacto
               </Link>
               <Button
                 asChild
                 className="w-full bg-blue-600 text-white hover:bg-blue-700"
               >
-                <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
+                <a
+                  href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}
+                  onClick={() => setOpen(false)}
+                >
                   Probar gratis
                 </a>
               </Button>
               {user.isAuthenticated && (
-                <Button variant="outline" className="w-full" onClick={logout}>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    logout();
+                    setOpen(false);
+                  }}
+                >
                   Cerrar sesión
                 </Button>
               )}

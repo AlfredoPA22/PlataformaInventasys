@@ -1,3 +1,4 @@
+import Footer from "@/pages/footer/Footer";
 import { Outlet } from "react-router-dom";
 import Header from "../header/Header";
 
@@ -8,6 +9,7 @@ const MainLayout: React.FC = () => {
       <main>
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 };
