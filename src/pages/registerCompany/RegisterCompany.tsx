@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { schemaFormRegisterCompany } from "./FormRegisterCompanyValidation";
+import { countriesMock } from "@/utils/mock/countryMock";
 
 const RegisterCompany = () => {
   const navigate = useNavigate();
@@ -178,7 +179,6 @@ const RegisterCompany = () => {
                 label: "Dirección",
                 placeholder: "Ej: Calle 123, Zona Centro",
               },
-              { id: "country", label: "País", placeholder: "Ej: Bolivia" },
             ].map(({ id, label, placeholder, type = "text" }) => (
               <div key={id} className="space-y-1 m-1">
                 <Label htmlFor={id}>{label}</Label>
@@ -201,6 +201,33 @@ const RegisterCompany = () => {
                 </p>
               </div>
             ))}
+
+            <div className="space-y-1 m-1">
+              <Label htmlFor="country">País</Label>
+              <Select
+                name="country"
+                value={values.country}
+                onValueChange={(value) => setFieldValue("country", value)}
+              >
+                <SelectTrigger id="country" className="w-full">
+                  <SelectValue placeholder="Selecciona un país" />
+                </SelectTrigger>
+                <SelectContent>
+                  {countriesMock.map((country) => (
+                    <SelectItem key={country} value={country}>
+                      {country}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p
+                className={`text-xs text-red-500 min-h-[0.25rem] transition-opacity duration-200 ${
+                  errors.country ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                {errors.country ?? " "}
+              </p>
+            </div>
 
             <div className="space-y-1 m-1">
               <Label htmlFor="plan">Plan</Label>

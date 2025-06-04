@@ -105,7 +105,9 @@ const MyAccount = () => {
             {listCompany.length > 0 && (
               <Button
                 className="cursor-pointer"
-                onClick={() => window.open("http://localhost:5174", "_blank")}
+                onClick={() =>
+                  window.open(import.meta.env.VITE_CLIENT_INVENTORY, "_blank")
+                }
               >
                 Ir al sistema
               </Button>
