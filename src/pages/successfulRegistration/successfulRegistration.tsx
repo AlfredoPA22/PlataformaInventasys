@@ -102,7 +102,9 @@ const SuccessfulRegistration = () => {
 
           <Button
             className="w-full"
-            onClick={() => window.open("http://localhost:5174", "_blank")}
+            onClick={() =>
+              window.open(import.meta.env.VITE_CLIENT_INVENTORY, "_blank")
+            }
           >
             Iniciar sesión
           </Button>
