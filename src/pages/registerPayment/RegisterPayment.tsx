@@ -30,6 +30,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import QRImage from "../../assets/QRINVENTASYS.jpeg";
 import { schemaFormRegisterPayment } from "./FormRegisterPaymentValidation";
+import { plansMock } from "@/utils/mock/planMock";
 
 const RegisterPayment = () => {
   const navigate = useNavigate();
@@ -198,28 +199,11 @@ const RegisterPayment = () => {
               </p>
 
               <ul className="list-disc list-inside text-sm text-blue-800 pl-2">
-                {plan === CompanyPlan.BASIC && (
-                  <>
-                    <li>Hasta 3 empresas</li>
-                    <li>Usuarios ilimitados</li>
-                    <li>Multi-Almacén</li>
-                    <li>Soporte prioritario</li>
-                  </>
-                )}
-                {plan === CompanyPlan.PRO && (
-                  <>
-                    <li>Empresas ilimitadas</li>
-                    <li>Integraciones disponibles</li>
-                    <li>Soporte dedicado</li>
-                  </>
-                )}
-                {plan === CompanyPlan.FREE && (
-                  <>
-                    <li>1 empresa</li>
-                    <li>1 almacén</li>
-                    <li>Soporte básico</li>
-                  </>
-                )}
+                {plansMock
+                  ?.find((p) => p.id === plan)
+                  ?.features.map((feature, idx) => (
+                    <li key={idx}>{feature}</li>
+                  ))}
               </ul>
 
               <hr className="border-blue-300" />

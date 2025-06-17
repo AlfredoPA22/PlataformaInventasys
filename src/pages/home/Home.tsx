@@ -18,8 +18,10 @@ const Home: React.FC = () => {
             <span className="text-yellow-300">Inventasys</span>
           </h1>
           <p className="text-lg md:text-xl mb-8">
-            El sistema inteligente para llevar el control total de tus
-            productos, ventas y almacenes.
+            Controla tu inventario, ventas y almacenes desde un solo lugar, sin
+            complicaciones ni costos elevados. Inventasys te ofrece un sistema
+            completo, diseñado para pequeñas y medianas empresas que buscan
+            eficiencia sin gastar de más.
           </p>
           <Button
             className="bg-yellow-300 text-gray-900 font-semibold py-3 px-6 rounded shadow hover:bg-yellow-400 cursor-pointer"

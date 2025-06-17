@@ -15,7 +15,7 @@ const AppRoutes: FC = () => {
         <Route index element={<Home />} />
         <Route path="detalles-sistema" element={<SystemDetail />} />
         <Route path="planes-sistema" element={<SystemPlans />} />
-        <Route path="contacto" element={<ContactPage />} />
+        <Route path="nosotros" element={<ContactPage />} />
         <Route path="login" element={<Login />} />
         <Route path="/*" element={<PrivateRoutes />} />
       </Route>

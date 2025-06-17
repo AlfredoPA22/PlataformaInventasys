@@ -47,10 +47,10 @@ const Header: React.FC = () => {
             Planes
           </Link>
           <Link
-            to="/contacto"
+            to="/nosotros"
             className="text-gray-700 hover:text-blue-600 transition"
           >
-            Contacto
+            Nosotros
           </Link>
           <Button asChild className="bg-blue-600 text-white hover:bg-blue-700">
             <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
@@ -131,11 +131,11 @@ const Header: React.FC = () => {
                 Planes
               </Link>
               <Link
-                to="/contacto"
+                to="/nosotros"
                 onClick={() => setOpen(false)}
                 className="block text-lg text-gray-700 hover:text-blue-600"
               >
-                Contacto
+                Nosotros
               </Link>
               <Button
                 asChild

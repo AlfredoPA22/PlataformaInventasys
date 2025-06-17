@@ -20,6 +20,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { schemaFormRegisterCompany } from "./FormRegisterCompanyValidation";
 import { countriesMock } from "@/utils/mock/countryMock";
+import { currenciesMock } from "@/utils/mock/currencyMock";
 
 const RegisterCompany = () => {
   const navigate = useNavigate();
@@ -78,6 +79,7 @@ const RegisterCompany = () => {
     address: "",
     country: "",
     plan: detectedPlan,
+    currency: currenciesMock[0],
   };
 
   const {
@@ -216,6 +218,33 @@ const RegisterCompany = () => {
                   {countriesMock.map((country) => (
                     <SelectItem key={country} value={country}>
                       {country}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p
+                className={`text-xs text-red-500 min-h-[0.25rem] transition-opacity duration-200 ${
+                  errors.country ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                {errors.country ?? " "}
+              </p>
+            </div>
+
+            <div className="space-y-1 m-1">
+              <Label htmlFor="currency">Moneda</Label>
+              <Select
+                name="currency"
+                value={values.currency}
+                onValueChange={(value) => setFieldValue("currency", value)}
+              >
+                <SelectTrigger id="currency" className="w-full">
+                  <SelectValue placeholder="Selecciona una moneda" />
+                </SelectTrigger>
+                <SelectContent>
+                  {currenciesMock.map((currency) => (
+                    <SelectItem key={currency} value={currency}>
+                      {currency}
                     </SelectItem>
                   ))}
                 </SelectContent>

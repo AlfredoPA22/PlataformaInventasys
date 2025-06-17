@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const ContactPage: React.FC = () => {
   return (
@@ -6,21 +6,44 @@ const ContactPage: React.FC = () => {
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Descripción */}
         <div>
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">Sobre Nosotros</h2>
+          <h2 className="text-4xl font-bold text-gray-800 mb-4">
+            Sobre Nosotros
+          </h2>
           <p className="text-gray-600 mb-6 text-lg">
-            En <strong>Inventasys</strong>, desarrollamos soluciones tecnológicas especializadas para la gestión de inventario, ventas y control administrativo de pequeñas y medianas empresas. Nuestra plataforma está diseñada para ofrecer herramientas intuitivas, potentes y accesibles que permiten a los negocios operar con mayor eficiencia y control.
+            En <strong>Inventasys</strong>, democratizamos la
+            tecnología para pequeñas y medianas empresas. Desarrollamos
+            soluciones de software accesibles, funcionales y listas para usar,
+            enfocadas en la gestión de inventario, ventas y control
+            administrativo. Nuestra misión es que cualquier negocio, sin
+            importar su tamaño, pueda acceder a herramientas digitales
+            eficientes sin necesidad de grandes inversiones. Ofrecemos planes
+            simples, precios justos y una plataforma intuitiva que crece junto a
+            tu empresa.
           </p>
 
-          <h3 className="text-2xl font-semibold text-gray-800 mt-10 mb-2">Contacto</h3>
+          <h3 className="text-2xl font-semibold text-gray-800 mt-10 mb-2">
+            Contacto
+          </h3>
           <p className="text-gray-600 mb-4">
-            Si deseas más información, necesitas soporte o quieres conocer nuestras soluciones empresariales, puedes contactarnos a través de los siguientes medios:
+            Si deseas más información, necesitas soporte o quieres conocer
+            nuestras soluciones empresariales, puedes contactarnos a través de
+            los siguientes medios:
           </p>
 
           <div className="space-y-2 text-gray-700">
-            <p><strong>📧 Correo:</strong> inventasysbolivia@gmail.com</p>
-            <p><strong>📞 Teléfono:</strong> +591 69040342</p>
-            <p><strong>📍 Dirección:</strong> Magisterio sur Calle #8, 8vo anillo, Santa Cruz - Bolivia</p>
-            <p><strong>🕒 Horarios:</strong> Lunes a Viernes de 9:00 a 18:00</p>
+            <p>
+              <strong>📧 Correo:</strong> inventasysbolivia@gmail.com
+            </p>
+            <p>
+              <strong>📞 Teléfono:</strong> +591 69040342
+            </p>
+            <p>
+              <strong>📍 Dirección:</strong> Magisterio sur Calle #8, 8vo
+              anillo, Santa Cruz - Bolivia
+            </p>
+            <p>
+              <strong>🕒 Horarios:</strong> Lunes a Viernes de 9:00 a 18:00
+            </p>
           </div>
         </div>
 

@@ -9,6 +9,7 @@ export interface ICompanyInput {
   address?: string;
   country?: string;
   plan: string;
+  currency: string;
 }
 
 export interface ICompany {

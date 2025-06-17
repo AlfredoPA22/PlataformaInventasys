@@ -10,6 +10,7 @@ export const CREATE_COMPANY = gql`
     $address: String
     $phone: String
     $plan: String!
+    $currency: String!
   ) {
     createCompany(
       companyInput: {
@@ -21,6 +22,7 @@ export const CREATE_COMPANY = gql`
         address: $address
         phone: $phone
         plan: $plan
+        currency: $currency
       }
     ) {
       adminCredentials {

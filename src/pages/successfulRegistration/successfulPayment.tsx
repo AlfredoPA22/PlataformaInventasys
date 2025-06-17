@@ -25,7 +25,7 @@ const SuccessfulPayment = () => {
 
   if (!state) return null;
 
-  const { company, plan, amount, email } = state;
+  const { company, plan, amount } = state;
 
   return (
     <div className="flex items-center justify-center p-4">
@@ -47,14 +47,6 @@ const SuccessfulPayment = () => {
               <span className="font-medium text-gray-700">Monto:</span> {amount}{" "}
               Bs
             </p>
-            {email && (
-              <p>
-                <span className="font-medium text-gray-700">
-                  Correo de contacto:
-                </span>{" "}
-                {email}
-              </p>
-            )}
           </div>
 
           <p className="text-xs text-gray-500">
@@ -63,8 +55,8 @@ const SuccessfulPayment = () => {
             credenciales al correo de la cuenta.
           </p>
 
-          <Button className="w-full cursor-pointer" onClick={() => navigate("/")}>
-            Ir al inicio
+          <Button className="w-full cursor-pointer" onClick={() => navigate("/mi-cuenta")}>
+            Ir a Mi cuenta
           </Button>
         </CardContent>
       </Card>
