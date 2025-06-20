@@ -15,7 +15,7 @@ createRoot(document.getElementById("root")!).render(
     <ApolloProvider client={apolloClient}>
       <BrowserRouter>
         <Provider store={store}>
-          <GoogleOAuthProvider clientId="113141489679-r29qbjm43s033kdais56a091vurejn0r.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId="559173991940-aj695pntjmdcpfr01mpcecu7pqr2b5eg.apps.googleusercontent.com">
             <App />
           </GoogleOAuthProvider>
         </Provider>
