@@ -155,7 +155,7 @@ const Header: React.FC = () => {
               </Link>
               <Button
                 asChild
-                className="bg-yellow-300 text-[#0F3853] hover:bg-yellow-400"
+            className="bg-[#A0C82E] text-[#0F3853] hover:bg-yellow-400"
               >
                 <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
                   Probar gratis
