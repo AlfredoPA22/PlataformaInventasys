@@ -25,8 +25,18 @@ const Header: React.FC = () => {
   return (
     <header className="bg-white shadow-sm py-4 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-blue-700">
-          Inventasys
+        <Link
+          to="/"
+          className="flex justify-center items-center gap-2 text-2xl font-bold"
+        >
+          <img
+            src="https://res.cloudinary.com/dyyd4no6j/image/upload/v1750462264/icono_inventasys_ca6zei.png"
+            alt="Inventasys logo"
+            className="sm:h-16 h-10 w-auto"
+          />
+          <span className="text-2xl font-bold text-[#0F3853] sm:inline">
+            Inventasys
+          </span>
         </Link>
 
         {/* Menú en desktop */}
@@ -52,7 +62,10 @@ const Header: React.FC = () => {
           >
             Nosotros
           </Link>
-          <Button asChild className="bg-blue-600 text-white hover:bg-blue-700">
+          <Button
+            asChild
+            className="bg-[#A0C82E] text-[#0F3853] hover:bg-yellow-400"
+          >
             <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
               Probar gratis
             </a>
@@ -76,7 +89,10 @@ const Header: React.FC = () => {
                   {user.fullName}
                 </DropdownMenuLabel>
                 <DropdownMenuItem asChild>
-                  <Link to="/mi-cuenta" className="text-xs text-gray-500 cursor-pointer">
+                  <Link
+                    to="/mi-cuenta"
+                    className="text-xs text-gray-500 cursor-pointer"
+                  >
                     Mi cuenta
                   </Link>
                 </DropdownMenuItem>
@@ -139,12 +155,9 @@ const Header: React.FC = () => {
               </Link>
               <Button
                 asChild
-                className="w-full bg-blue-600 text-white hover:bg-blue-700"
+                className="bg-yellow-300 text-[#0F3853] hover:bg-yellow-400"
               >
-                <a
-                  href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}
-                  onClick={() => setOpen(false)}
-                >
+                <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
                   Probar gratis
                 </a>
               </Button>

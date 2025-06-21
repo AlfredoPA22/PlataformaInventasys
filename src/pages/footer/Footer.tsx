@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo y descripción */}
         <div>
-          <h2 className="text-2xl font-bold text-blue-700">Inventasys</h2>
+          <h2 className="text-2xl font-bold text-[#103953]">Inventasys</h2>
           <p className="text-sm text-gray-600 mt-2">
             Plataforma SaaS para gestión de inventarios, ventas y control
             administrativo de pymes.

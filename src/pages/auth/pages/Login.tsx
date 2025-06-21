@@ -11,23 +11,18 @@ export default function LoginPage() {
       </div>
 
       {/* Lado derecho con branding atractivo */}
-      <div className="relative flex items-center justify-center px-10 py-14 bg-gradient-to-br from-[#dbeafe] via-[#eff6ff] to-white text-blue-800">
+      <div className="relative flex items-center justify-center px-10 py-16 bg-gradient-to-br from-[#f5fbe6] via-[#eff6ff] to-[#f5fbe6] text-[#103953]">
         <div className="max-w-md space-y-6 text-center">
           <h2 className="text-3xl font-bold leading-tight drop-shadow-lg">
             Bienvenido a{" "}
-            <span className="underline decoration-amber-300">Inventasys</span>
+            <span className="underline decoration-[#A0C82E]">Inventasys</span>
           </h2>
-          <p className="text-base text-blue-700">
+          <p className="text-base text-[#103953]">
             Gestiona tu inventario y operaciones desde un solo lugar con una
             experiencia fluida y profesional.
           </p>
 
-          <p className="text-sm mt-4 text-blue-600">
-            ¿No tienes cuenta?{" "}
-            <span className="font-semibold text-blue-800 underline">
-              Prueba gratis por 7 días.
-            </span>
-          </p>
+          
         </div>
       </div>
     </div>

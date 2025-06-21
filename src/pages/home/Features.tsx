@@ -36,7 +36,7 @@ const Features: React.FC = () => {
   return (
     <section className="px-6 bg-white">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#0F3853] mb-6">
           ¿Qué puedes hacer con Inventasys?
         </h2>
         <p className="text-gray-600 mb-12 max-w-2xl mx-auto text-base md:text-lg">
@@ -51,7 +51,7 @@ const Features: React.FC = () => {
               className="text-left shadow-md hover:shadow-lg transition-shadow flex flex-col"
             >
               <CardHeader>
-                <CardTitle className="text-lg md:text-xl font-semibold text-blue-800 text-center">
+                <CardTitle className="text-lg md:text-xl font-semibold text-[#0F3853] text-center">
                   {f.title}
                 </CardTitle>
               </CardHeader>
@@ -75,7 +75,7 @@ const Features: React.FC = () => {
 
         <Link
           to="/detalles-sistema"
-          className="inline-block text-blue-600 font-medium text-sm md:text-base hover:underline transition-colors"
+          className="inline-block text-[#0F3853] font-medium text-sm md:text-base hover:underline transition-colors"
         >
           Ver detalles completos del sistema &rarr;
         </Link>
