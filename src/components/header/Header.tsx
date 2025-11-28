@@ -23,48 +23,55 @@ const Header: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <header className="bg-white shadow-sm py-4 sticky top-0 z-50">
+    <header className="bg-white/95 backdrop-blur-md shadow-md py-4 sticky top-0 z-50 border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
         <Link
           to="/"
-          className="flex justify-center items-center gap-2 text-2xl font-bold"
+          className="flex justify-center items-center gap-3 text-2xl font-bold group transition-transform duration-300 hover:scale-105"
         >
           <img
             src="https://res.cloudinary.com/dyyd4no6j/image/upload/v1750462264/icono_inventasys_ca6zei.png"
             alt="Inventasys logo"
-            className="sm:h-16 h-10 w-auto"
+            className="sm:h-16 h-10 w-auto transition-transform duration-300 group-hover:rotate-3"
           />
-          <span className="text-2xl font-bold text-[#0F3853] sm:inline">
+          <span className="text-2xl font-bold text-[#0F3853] sm:inline bg-gradient-to-r from-[#0F3853] to-[#A0C82E] bg-clip-text text-transparent">
             Inventasys
           </span>
         </Link>
 
         {/* Menú en desktop */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="/" className="text-gray-700 hover:text-blue-600 transition">
+          <Link 
+            to="/" 
+            className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
+          >
             Inicio
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full"></span>
           </Link>
           <Link
             to="/detalles-sistema"
-            className="text-gray-700 hover:text-blue-600 transition"
+            className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
           >
             Detalles
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full"></span>
           </Link>
           <Link
             to="/planes-sistema"
-            className="text-gray-700 hover:text-blue-600 transition"
+            className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
           >
             Planes
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full"></span>
           </Link>
           <Link
             to="/nosotros"
-            className="text-gray-700 hover:text-blue-600 transition"
+            className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
           >
             Nosotros
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full"></span>
           </Link>
           <Button
             asChild
-            className="bg-[#A0C82E] text-[#0F3853] hover:bg-yellow-400"
+            className="bg-[#A0C82E] text-[#0F3853] hover:bg-yellow-400 font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
           >
             <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
               Probar gratis
@@ -73,7 +80,7 @@ const Header: React.FC = () => {
           {user.isAuthenticated && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="rounded-full border-2 border-transparent hover:border-blue-600 transition cursor-pointer">
+                <button className="rounded-full border-2 border-transparent hover:border-[#A0C82E] transition-all duration-300 cursor-pointer transform hover:scale-110 shadow-md hover:shadow-lg">
                   <img
                     src={
                       user.picture ||

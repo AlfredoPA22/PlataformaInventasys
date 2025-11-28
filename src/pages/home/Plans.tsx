@@ -12,33 +12,56 @@ const Plans: React.FC = () => {
 
   return (
     <section className="max-w-6xl mx-auto text-center px-4 py-16">
-      <h2 className="text-4xl font-extrabold text-[#0F3953] mb-12">
-        Planes que se adaptan a tu negocio
-      </h2>
+      <div className="mb-16">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-[#0F3953] mb-6">
+          Planes que se adaptan a tu negocio
+        </h2>
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          Elige el plan perfecto para tu empresa y comienza a gestionar tu inventario de manera eficiente
+        </p>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {plansMock.map((plan, index) => (
           <Card
             key={index}
-            className="text-left shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300"
+            className={`text-left shadow-xl rounded-2xl border-2 transition-all duration-300 transform hover:scale-105 ${
+              index === 1 
+                ? 'border-[#A0C92F] bg-gradient-to-br from-[#A0C92F]/10 to-white shadow-2xl scale-105' 
+                : 'border-gray-200 hover:border-[#A0C92F]/50 bg-white'
+            }`}
           >
-            <CardHeader>
-              <CardTitle className="text-2xl font-semibold text-[#A0C92F] mb-1">
+            {index === 1 && (
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#A0C92F] text-white px-4 py-1 rounded-full text-sm font-semibold">
+                Más Popular
+              </div>
+            )}
+            <CardHeader className="pb-4">
+              <CardTitle className="text-2xl md:text-3xl font-bold text-[#A0C92F] mb-2">
                 {plan.name}
               </CardTitle>
-              <p className="text-[#0F3953] font-bold text-xl">{plan.price}</p>
-              <p className="text-sm text-gray-500 mt-1">{plan.description}</p>
+              <div className="mb-2">
+                <span className="text-[#0F3953] font-extrabold text-3xl">{plan.price}</span>
+              </div>
+              <p className="text-sm text-gray-600 mt-2 leading-relaxed">{plan.description}</p>
             </CardHeader>
 
             <CardContent>
-              <ul className="mb-6 mt-4 space-y-2 text-sm text-gray-700">
+              <ul className="mb-8 mt-4 space-y-3 text-sm text-gray-700">
                 {plan.features.map((feature, i) => (
-                  <li key={i}>✅ {feature}</li>
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-[#A0C92F] text-lg mt-0.5">✓</span>
+                    <span className="flex-1">{feature}</span>
+                  </li>
                 ))}
               </ul>
 
               <Button
-                className="w-full mt-4 font-semibold text-white bg-[#A0C92F] hover:bg-[#92b82a] transition-colors cursor-pointer"
+                className={`w-full mt-4 font-semibold text-white py-6 rounded-lg transition-all duration-300 cursor-pointer transform hover:scale-105 shadow-lg ${
+                  index === 1
+                    ? 'bg-[#A0C92F] hover:bg-[#92b82a]'
+                    : 'bg-[#0F3953] hover:bg-[#0d4a6b]'
+                }`}
                 onClick={() => handleStart(plan.id)}
               >
                 Empezar con este plan

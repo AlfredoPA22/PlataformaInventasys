@@ -100,58 +100,101 @@ const RegisterCompany = () => {
   });
 
   return (
-    <div className="grid md:grid-cols-2 gap-2 max-w-7xl mx-auto py-5 p-2">
-      <section className="flex flex-col gap-5">
-        {/* Card de título */}
-        <Card className="shadow-md border border-gray-200">
-          <CardContent className="p-6 space-y-2">
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              🧾 Registro de Empresa
-            </h2>
-            <p className="text-sm text-gray-600">
-              Completa los datos de tu empresa para comenzar a usar la
-              plataforma. Si seleccionas un plan de pago, podrás continuar al
-              proceso de activación luego del registro.
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Información del plan (izquierda en desktop) */}
-        {detectedPlan &&
-          (() => {
-            const planInfo = plansMock.find((p) => p.id === detectedPlan);
-
-            return planInfo ? (
-              <Card className="bg-blue-50 border-blue-300 border shadow-md">
-                <CardContent className="p-6 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="text-blue-600 text-2xl font-bold">💼</div>
-                    <div>
-                      <h2 className="text-xl font-semibold text-blue-700">
-                        Plan Seleccionado: {planInfo.name}
-                      </h2>
-                      <p className="text-sm text-blue-600">{planInfo.price}</p>
-                    </div>
-                  </div>
-                  <ul className="list-disc list-inside pl-4 text-blue-800 text-sm">
-                    {planInfo.features.map((feature, i) => (
-                      <li key={i}>{feature}</li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ) : null;
-          })()}
-      </section>
-
-      {/* Formulario (derecha en desktop) */}
-      <Card className="shadow-xl">
-        <CardContent className="px-5 py-2">
-          <h1 className="text-2xl font-bold text-center text-gray-800">
-            Registrar Empresa
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Hero Section */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#0F3853] mb-4">
+            Registro de <span className="text-[#A0C82E]">Empresa</span>
           </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Completa los datos de tu empresa para comenzar a usar la plataforma
+          </p>
+        </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+        <div className="grid md:grid-cols-2 gap-8">
+          <section className="flex flex-col gap-6">
+            {/* Card de información */}
+            <Card className="shadow-xl border-2 border-gray-100 bg-gradient-to-br from-white to-gray-50/50">
+              <CardContent className="p-8 space-y-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#A0C82E] to-[#8BB429] rounded-xl flex items-center justify-center text-2xl">
+                    🧾
+                  </div>
+                  <h2 className="text-2xl font-bold text-[#0F3853]">
+                    Información importante
+                  </h2>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  Completa todos los datos solicitados para crear tu cuenta empresarial.
+                  Si seleccionas un plan de pago, podrás continuar al proceso de activación
+                  luego del registro.
+                </p>
+                <div className="bg-[#A0C82E]/10 border border-[#A0C82E]/20 rounded-lg p-4 mt-4">
+                  <p className="text-sm text-gray-700">
+                    <strong className="text-[#0F3853]">Nota:</strong> Los datos marcados con
+                    <span className="text-red-500"> *</span> son obligatorios.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Información del plan (izquierda en desktop) */}
+            {detectedPlan &&
+              (() => {
+                const planInfo = plansMock.find((p) => p.id === detectedPlan);
+
+                return planInfo ? (
+                  <Card className="shadow-xl border-2 border-[#A0C82E]/30 bg-gradient-to-br from-[#A0C82E]/10 via-white to-white">
+                    <CardContent className="p-6 space-y-4">
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 bg-gradient-to-br from-[#A0C82E] to-[#8BB429] rounded-xl flex items-center justify-center text-3xl">
+                          💼
+                        </div>
+                        <div className="flex-1">
+                          <h2 className="text-xl font-bold text-[#0F3853]">
+                            Plan Seleccionado
+                          </h2>
+                          <p className="text-2xl font-extrabold text-[#A0C82E]">
+                            {planInfo.name}
+                          </p>
+                          <p className="text-sm font-semibold text-gray-600">
+                            {planInfo.price}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="border-t border-gray-200 pt-4">
+                        <p className="text-sm font-semibold text-gray-700 mb-3">
+                          Características incluidas:
+                        </p>
+                        <ul className="space-y-2">
+                          {planInfo.features.map((feature, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <span className="text-[#A0C82E] text-lg mt-0.5">✓</span>
+                              <span className="text-sm text-gray-700">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : null;
+              })()}
+          </section>
+
+          {/* Formulario (derecha en desktop) */}
+          <Card className="shadow-2xl border-2 border-gray-100 bg-white">
+            <CardContent className="p-8">
+              <div className="mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-[#0F3853] mb-2">
+                  Datos de la Empresa
+                </h2>
+                <p className="text-sm text-gray-600">
+                  Completa el formulario con la información de tu empresa
+                </p>
+              </div>
+
+              <form className="space-y-3" onSubmit={handleSubmit}>
             {[
               {
                 id: "name",
@@ -182,8 +225,10 @@ const RegisterCompany = () => {
                 placeholder: "Ej: Calle 123, Zona Centro",
               },
             ].map(({ id, label, placeholder, type = "text" }) => (
-              <div key={id} className="space-y-1 m-1">
-                <Label htmlFor={id}>{label}</Label>
+              <div key={id} className="space-y-1.5">
+                <Label htmlFor={id} className="text-sm font-semibold text-gray-700">
+                  {label}
+                </Label>
                 <Input
                   id={id}
                   type={type}
@@ -191,9 +236,14 @@ const RegisterCompany = () => {
                   placeholder={placeholder}
                   value={values[id as keyof ICompanyInput] as string}
                   onChange={handleChange}
+                  className={`transition-all duration-200 ${
+                    errors[id as keyof typeof errors]
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:border-[#A0C82E] focus:ring-[#A0C82E]"
+                  }`}
                 />
                 <p
-                  className={`text-xs text-red-500 min-h-[0.25rem] transition-all duration-200 ${
+                  className={`text-xs text-red-500 min-h-[1.25rem] transition-all duration-200 ${
                     errors[id as keyof typeof errors]
                       ? "opacity-100"
                       : "opacity-0"
@@ -204,96 +254,126 @@ const RegisterCompany = () => {
               </div>
             ))}
 
-            <div className="space-y-1 m-1">
-              <Label htmlFor="country">País</Label>
-              <Select
-                name="country"
-                value={values.country}
-                onValueChange={(value) => setFieldValue("country", value)}
-              >
-                <SelectTrigger id="country" className="w-full">
-                  <SelectValue placeholder="Selecciona un país" />
-                </SelectTrigger>
-                <SelectContent>
-                  {countriesMock.map((country) => (
-                    <SelectItem key={country} value={country}>
-                      {country}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p
-                className={`text-xs text-red-500 min-h-[0.25rem] transition-opacity duration-200 ${
-                  errors.country ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                {errors.country ?? " "}
-              </p>
-            </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="country" className="text-sm font-semibold text-gray-700">
+                    País
+                  </Label>
+                  <Select
+                    name="country"
+                    value={values.country}
+                    onValueChange={(value) => setFieldValue("country", value)}
+                  >
+                    <SelectTrigger 
+                      id="country" 
+                      className={`w-full transition-all duration-200 ${
+                        errors.country
+                          ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                          : "border-gray-300 focus:border-[#A0C82E] focus:ring-[#A0C82E]"
+                      }`}
+                    >
+                      <SelectValue placeholder="Selecciona un país" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {countriesMock.map((country) => (
+                        <SelectItem key={country} value={country}>
+                          {country}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p
+                    className={`text-xs text-red-500 min-h-[1.25rem] transition-all duration-200 ${
+                      errors.country ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    {errors.country ?? " "}
+                  </p>
+                </div>
 
-            <div className="space-y-1 m-1">
-              <Label htmlFor="currency">Moneda</Label>
-              <Select
-                name="currency"
-                value={values.currency}
-                onValueChange={(value) => setFieldValue("currency", value)}
-              >
-                <SelectTrigger id="currency" className="w-full">
-                  <SelectValue placeholder="Selecciona una moneda" />
-                </SelectTrigger>
-                <SelectContent>
-                  {currenciesMock.map((currency) => (
-                    <SelectItem key={currency} value={currency}>
-                      {currency}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p
-                className={`text-xs text-red-500 min-h-[0.25rem] transition-opacity duration-200 ${
-                  errors.country ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                {errors.country ?? " "}
-              </p>
-            </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="currency" className="text-sm font-semibold text-gray-700">
+                    Moneda
+                  </Label>
+                  <Select
+                    name="currency"
+                    value={values.currency}
+                    onValueChange={(value) => setFieldValue("currency", value)}
+                  >
+                    <SelectTrigger 
+                      id="currency" 
+                      className="w-full border-gray-300 focus:border-[#A0C82E] focus:ring-[#A0C82E] transition-all duration-200"
+                    >
+                      <SelectValue placeholder="Selecciona una moneda" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {currenciesMock.map((currency) => (
+                        <SelectItem key={currency} value={currency}>
+                          {currency}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-            <div className="space-y-1 m-1">
-              <Label htmlFor="plan">Plan</Label>
-              <Select
-                name="plan"
-                value={values.plan}
-                onValueChange={(value) => setFieldValue("plan", value)}
-                disabled={!!detectedPlan}
-              >
-                <SelectTrigger id="plan" className="w-full">
-                  <SelectValue placeholder="Selecciona un plan" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={CompanyPlan.FREE}>Gratis</SelectItem>
-                  <SelectItem value={CompanyPlan.BASIC}>Básico</SelectItem>
-                  <SelectItem value={CompanyPlan.PRO}>Premium</SelectItem>
-                </SelectContent>
-              </Select>
-              <p
-                className={`text-xs text-red-500 min-h-[0.25rem] transition-opacity duration-200 ${
-                  errors.plan ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                {errors.plan ?? " "}
-              </p>
-            </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="plan" className="text-sm font-semibold text-gray-700">
+                    Plan
+                  </Label>
+                  <Select
+                    name="plan"
+                    value={values.plan}
+                    onValueChange={(value) => setFieldValue("plan", value)}
+                    disabled={!!detectedPlan}
+                  >
+                    <SelectTrigger 
+                      id="plan" 
+                      className={`w-full transition-all duration-200 ${
+                        errors.plan
+                          ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                          : "border-gray-300 focus:border-[#A0C82E] focus:ring-[#A0C82E]"
+                      } ${detectedPlan ? "bg-gray-100 cursor-not-allowed" : ""}`}
+                    >
+                      <SelectValue placeholder="Selecciona un plan" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={CompanyPlan.FREE}>Gratis</SelectItem>
+                      <SelectItem value={CompanyPlan.BASIC}>Básico</SelectItem>
+                      <SelectItem value={CompanyPlan.PRO}>Premium</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p
+                    className={`text-xs text-red-500 min-h-[1.25rem] transition-all duration-200 ${
+                      errors.plan ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    {errors.plan ?? " "}
+                  </p>
+                </div>
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={!dirty || !isValid || isSubmitting}
-            >
-              Registrar Empresa
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+                <div className="pt-4">
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-6 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    disabled={!dirty || !isValid || isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
+                        Registrando...
+                      </span>
+                    ) : (
+                      "Registrar Empresa"
+                    )}
+                  </Button>
+                  <p className="text-xs text-gray-500 text-center mt-3">
+                    Al registrar, aceptas nuestros términos y condiciones
+                  </p>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+/* Estilos globales mejorados */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -32,4 +33,25 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Utilidades adicionales */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Mejoras de rendimiento */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Selección de texto mejorada */
+::selection {
+  background-color: #A0C82E;
+  color: #0F3853;
+}
+
+::-moz-selection {
+  background-color: #A0C82E;
+  color: #0F3853;
 }

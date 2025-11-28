@@ -152,78 +152,112 @@ const RegisterPayment = () => {
   if (!state) return null;
 
   return (
-    <div className="grid md:grid-cols-2 gap-2 max-w-7xl mx-auto py-5 p-2">
-      <section className="flex flex-col gap-5">
-        {/* Card de título */}
-        <Card className="shadow-md border border-gray-200">
-          <CardContent className="p-6 space-y-2">
-            <p className="text-center text-sm text-gray-500 mb-1">
-              Empresa:{" "}
-              <span className="font-semibold text-gray-800">
-                {company.name}
-              </span>
-            </p>
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              💳 Registro de Pago
-            </h2>
-            <p className="text-sm text-gray-600">
-              Para activar el sistema, completa el siguiente formulario de pago
-              y adjunta el comprobante correspondiente.
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Importante:</strong> El pago será revisado y verificado
-              por el equipo de administración. Una vez aprobado, se enviarán tus
-              credenciales de acceso al correo registrado en la facturación.
-            </p>
-            <p className="text-sm text-gray-600">
-              Este proceso puede tomar hasta 24 horas hábiles. Si tienes dudas,
-              puedes contactarnos por los medios de soporte disponibles.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-blue-50 border border-blue-300 shadow-md">
-          <CardContent className="p-6 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="text-blue-600 text-3xl">📦</div>
-              <h2 className="text-xl font-bold text-blue-800">
-                Resumen del Plan Seleccionado
-              </h2>
-            </div>
-
-            <div className="space-y-2">
-              <p className="text-sm text-gray-700">
-                Estás registrando el pago para activar el plan{" "}
-                <strong className="uppercase">{plan}</strong>, el cual te brinda
-                los siguientes beneficios:
-              </p>
-
-              <ul className="list-disc list-inside text-sm text-blue-800 pl-2">
-                {plansMock
-                  ?.find((p) => p.id === plan)
-                  ?.features.map((feature, idx) => (
-                    <li key={idx}>{feature}</li>
-                  ))}
-              </ul>
-
-              <hr className="border-blue-300" />
-
-              <p className="text-base text-gray-800">
-                <strong className="text-lg text-blue-700">Monto total:</strong>{" "}
-                <span className="text-lg font-semibold">{amount} Bs</span>
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      <Card className="shadow-xl h-fit">
-        <CardContent className="px-5 py-2">
-          <h1 className="text-2xl font-bold text-center text-gray-800">
-            Registrar Pago
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Hero Section */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#0F3853] mb-4">
+            Registro de <span className="text-[#A0C82E]">Pago</span>
           </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Completa el formulario para activar tu plan y comenzar a usar Inventasys
+          </p>
+        </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+        <div className="grid md:grid-cols-2 gap-8">
+          <section className="flex flex-col gap-6">
+            {/* Card de información */}
+            <Card className="shadow-xl border-2 border-gray-100 bg-gradient-to-br from-white to-gray-50/50">
+              <CardContent className="p-8 space-y-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#A0C82E] to-[#8BB429] rounded-xl flex items-center justify-center text-2xl">
+                    💳
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-[#0F3853]">
+                      Información de Pago
+                    </h2>
+                    <p className="text-sm text-gray-500">
+                      Empresa: <span className="font-semibold text-gray-800">{company.name}</span>
+                    </p>
+                  </div>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  Para activar el sistema, completa el siguiente formulario de pago
+                  y adjunta el comprobante correspondiente.
+                </p>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-2">
+                  <p className="text-sm font-semibold text-blue-800">
+                    ⚠️ Importante
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    El pago será revisado y verificado por el equipo de administración.
+                    Una vez aprobado, se enviarán tus credenciales de acceso al correo
+                    registrado en la facturación.
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    Este proceso puede tomar hasta 24 horas hábiles.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Resumen del plan */}
+            <Card className="shadow-xl border-2 border-[#A0C82E]/30 bg-gradient-to-br from-[#A0C82E]/10 via-white to-white">
+              <CardContent className="p-6 space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#A0C82E] to-[#8BB429] rounded-xl flex items-center justify-center text-3xl">
+                    📦
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-xl font-bold text-[#0F3853]">
+                      Resumen del Plan
+                    </h2>
+                    <p className="text-sm text-gray-600">
+                      Plan <span className="font-semibold uppercase text-[#A0C82E]">{plan}</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-200 pt-4 space-y-3">
+                  <p className="text-sm font-semibold text-gray-700">
+                    Características incluidas:
+                  </p>
+                  <ul className="space-y-2">
+                    {plansMock
+                      ?.find((p) => p.id === plan)
+                      ?.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-[#A0C82E] text-lg mt-0.5">✓</span>
+                          <span className="text-sm text-gray-700">{feature}</span>
+                        </li>
+                      ))}
+                  </ul>
+
+                  <div className="bg-[#0F3853]/5 rounded-lg p-4 mt-4 border border-[#0F3853]/10">
+                    <p className="text-sm text-gray-600 mb-1">Monto total a pagar</p>
+                    <p className="text-3xl font-extrabold text-[#0F3853]">
+                      {amount} <span className="text-lg">Bs</span>
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Formulario */}
+          <Card className="shadow-2xl border-2 border-gray-100 bg-white">
+            <CardContent className="p-8">
+              <div className="mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-[#0F3853] mb-2">
+                  Datos de Facturación
+                </h2>
+                <p className="text-sm text-gray-600">
+                  Completa la información para la facturación
+                </p>
+              </div>
+
+              <form className="space-y-3" onSubmit={handleSubmit}>
             {[
               {
                 id: "billing_name",
@@ -242,8 +276,10 @@ const RegisterPayment = () => {
                 placeholder: "Ej: 1234567890",
               },
             ].map(({ id, label, placeholder, type = "text" }) => (
-              <div key={id} className="space-y-1 m-1">
-                <Label htmlFor={id}>{label}</Label>
+              <div key={id} className="space-y-1.5">
+                <Label htmlFor={id} className="text-sm font-semibold text-gray-700">
+                  {label}
+                </Label>
                 <Input
                   id={id}
                   type={type}
@@ -251,9 +287,14 @@ const RegisterPayment = () => {
                   placeholder={placeholder}
                   value={values[id as keyof IPaymentInput] as string}
                   onChange={handleChange}
+                  className={`transition-all duration-200 ${
+                    errors[id as keyof typeof errors]
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:border-[#A0C82E] focus:ring-[#A0C82E]"
+                  }`}
                 />
                 <p
-                  className={`text-xs text-red-500 min-h-[0.25rem] transition-all duration-200 ${
+                  className={`text-xs text-red-500 min-h-[1.25rem] transition-all duration-200 ${
                     errors[id as keyof typeof errors]
                       ? "opacity-100"
                       : "opacity-0"
@@ -264,25 +305,34 @@ const RegisterPayment = () => {
               </div>
             ))}
 
-            <div className="space-y-1 m-1">
-              <Label htmlFor="method">Método de pago</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="method" className="text-sm font-semibold text-gray-700">
+                Método de pago
+              </Label>
               <Select
                 name="method"
                 value={values.method}
                 onValueChange={(value) => setFieldValue("method", value)}
               >
-                <SelectTrigger id="method" className="w-full">
-                  <SelectValue placeholder="Selecciona un metodo" />
+                <SelectTrigger 
+                  id="method" 
+                  className={`w-full transition-all duration-200 ${
+                    errors.method
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:border-[#A0C82E] focus:ring-[#A0C82E]"
+                  }`}
+                >
+                  <SelectValue placeholder="Selecciona un método" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={PaymentMethod.QR}>Qr</SelectItem>
+                  <SelectItem value={PaymentMethod.QR}>QR</SelectItem>
                   <SelectItem value={PaymentMethod.TRANSFER}>
-                    Transferencia
+                    Transferencia Bancaria
                   </SelectItem>
                 </SelectContent>
               </Select>
               <p
-                className={`text-xs text-red-500 min-h-[0.25rem] transition-opacity duration-200 ${
+                className={`text-xs text-red-500 min-h-[1.25rem] transition-all duration-200 ${
                   errors.method ? "opacity-100" : "opacity-0"
                 }`}
               >
@@ -297,91 +347,137 @@ const RegisterPayment = () => {
                 if (!open) handleFileClear();
               }}
             >
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Subir comprobante de pago</DialogTitle>
+              <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col">
+                <DialogHeader className="flex-shrink-0">
+                  <DialogTitle className="text-2xl font-bold text-[#0F3853]">
+                    Subir comprobante de pago
+                  </DialogTitle>
                 </DialogHeader>
 
-                <div className="space-y-4">
+                <div className="space-y-6 overflow-y-auto flex-1 pr-2">
                   {values.method && (
-                    <div className="space-y-2 border rounded-md p-4 bg-muted/40">
-                      <p className="text-sm font-semibold text-gray-700">
+                    <div className="space-y-4 border-2 border-gray-200 rounded-xl p-6 bg-gradient-to-br from-gray-50 to-white">
+                      <p className="text-base font-semibold text-[#0F3853]">
                         {paymentDetails[values.method]?.title}
                       </p>
 
                       {values.method === PaymentMethod.QR && (
-                        <a
-                          href={paymentDetails[PaymentMethod.QR].image}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src={paymentDetails[PaymentMethod.QR].image}
-                            alt="QR de pago"
-                            className="rounded-md border w-full max-h-60 object-contain cursor-zoom-in transition hover:opacity-80"
-                          />
-                        </a>
+                        <div className="flex justify-center">
+                          <a
+                            href={paymentDetails[PaymentMethod.QR].image}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group"
+                          >
+                            <div className="relative">
+                              <div className="absolute inset-0 bg-[#A0C82E]/20 rounded-xl blur-lg group-hover:blur-xl transition-all"></div>
+                              <img
+                                src={paymentDetails[PaymentMethod.QR].image}
+                                alt="QR de pago"
+                                className="relative rounded-xl border-4 border-white shadow-2xl w-full max-w-xs object-contain cursor-zoom-in transition-transform group-hover:scale-105"
+                              />
+                            </div>
+                          </a>
+                        </div>
                       )}
 
-                      {values.method === PaymentMethod.TRANSFER &&
-                        paymentDetails[PaymentMethod.TRANSFER].info.map(
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                          (item: any, idx: number) => (
-                            <p key={idx} className="text-sm text-gray-800">
-                              <strong>{item.label}:</strong> {item.value}
-                            </p>
-                          )
-                        )}
+                      {values.method === PaymentMethod.TRANSFER && (
+                        <div className="grid grid-cols-2 gap-4">
+                          {paymentDetails[PaymentMethod.TRANSFER].info.map(
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            (item: any, idx: number) => (
+                              <div key={idx} className="bg-white rounded-lg p-3 border border-gray-200">
+                                <p className="text-xs text-gray-500 mb-1">{item.label}</p>
+                                <p className="text-sm font-semibold text-gray-800">{item.value}</p>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      )}
                     </div>
                   )}
-                  <Label htmlFor="proof_url">Comprobante</Label>
-                  <Input
-                    id="proof_url"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                  />
-                  {selectedImage && (
-                    <img
-                      src={URL.createObjectURL(selectedImage)}
-                      alt="Vista previa"
-                      className="rounded-md border w-full max-h-60 object-contain"
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="proof_url" className="text-sm font-semibold text-gray-700">
+                      Comprobante de pago
+                    </Label>
+                    <Input
+                      id="proof_url"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="border-gray-300 focus:border-[#A0C82E] focus:ring-[#A0C82E] transition-all duration-200"
                     />
-                  )}
+                    {selectedImage && (
+                      <div className="mt-4">
+                        <p className="text-sm text-gray-600 mb-2">Vista previa:</p>
+                        <div className="relative rounded-xl overflow-hidden border-2 border-gray-200">
+                          <img
+                            src={URL.createObjectURL(selectedImage)}
+                            alt="Vista previa"
+                            className="w-full max-h-64 object-contain"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <DialogFooter className="mt-4">
+                <DialogFooter className="mt-6 gap-3 flex-shrink-0 border-t pt-4">
                   <Button
                     onClick={() => {
                       handleFileClear();
                       setIsDialogOpen(false);
                     }}
-                    variant="ghost"
+                    variant="outline"
+                    className="flex-1"
                   >
                     Cancelar
                   </Button>
                   <Button
                     type="button"
                     onClick={() => handleSubmit()}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !selectedImage}
+                    className="flex-1 bg-[#A0C82E] hover:bg-[#8BB429] text-white"
                   >
-                    Confirmar pago
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
+                        Procesando...
+                      </span>
+                    ) : (
+                      "Confirmar pago"
+                    )}
                   </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
 
-            <Button
-              type="button"
-              className="w-full"
-              disabled={!dirty || !isValid || isSubmitting}
-              onClick={() => setIsDialogOpen(true)}
-            >
-              Realizar Pago
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+            <div className="pt-4">
+              <Button
+                type="button"
+                className="w-full bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-6 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                disabled={!dirty || !isValid || isSubmitting}
+                onClick={() => setIsDialogOpen(true)}
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center gap-2">
+                    <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
+                    Procesando...
+                  </span>
+                ) : (
+                  "Continuar con el pago"
+                )}
+              </Button>
+              <p className="text-xs text-gray-500 text-center mt-3">
+                Al continuar, serás redirigido para subir tu comprobante
+              </p>
+            </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };

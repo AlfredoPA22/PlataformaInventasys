@@ -36,35 +36,37 @@ const Features: React.FC = () => {
   return (
     <section className="px-6 bg-white">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#0F3853] mb-6">
-          ¿Qué puedes hacer con Inventasys?
-        </h2>
-        <p className="text-gray-600 mb-12 max-w-2xl mx-auto text-base md:text-lg">
-          Nuestro sistema está diseñado para adaptarse a las necesidades reales
-          de tu negocio, facilitando la gestión desde un solo lugar.
-        </p>
+        <div className="mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3853] mb-6">
+            ¿Qué puedes hacer con Inventasys?
+          </h2>
+          <p className="text-gray-600 mb-4 max-w-2xl mx-auto text-base md:text-xl leading-relaxed">
+            Nuestro sistema está diseñado para adaptarse a las necesidades reales
+            de tu negocio, facilitando la gestión desde un solo lugar.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {features.map((f, i) => (
             <Card
               key={i}
-              className="text-left shadow-md hover:shadow-lg transition-shadow flex flex-col"
+              className="text-left shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col border-2 border-transparent hover:border-[#A0C82E]/30 transform hover:scale-105 bg-gradient-to-br from-white to-gray-50/50"
             >
-              <CardHeader>
-                <CardTitle className="text-lg md:text-xl font-semibold text-[#0F3853] text-center">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl md:text-2xl font-bold text-[#0F3853] text-center">
                   {f.title}
                 </CardTitle>
               </CardHeader>
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="w-full md:w-1/2 p-4 flex justify-center">
+              <div className="flex flex-col md:flex-row items-center gap-4">
+                <div className="w-full md:w-1/2 p-6 flex justify-center bg-gradient-to-br from-[#A0C82E]/10 to-transparent rounded-lg">
                   <img
                     src={f.image}
                     alt={f.title}
-                    className="w-full h-auto max-h-60 object-contain"
+                    className="w-full h-auto max-h-64 object-contain drop-shadow-lg"
                   />
                 </div>
-                <CardContent className="w-full md:w-1/2 p-4">
-                  <p className="text-gray-700 text-sm md:text-base">
+                <CardContent className="w-full md:w-1/2 p-6">
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
                     {f.description}
                   </p>
                 </CardContent>
@@ -75,9 +77,10 @@ const Features: React.FC = () => {
 
         <Link
           to="/detalles-sistema"
-          className="inline-block text-[#0F3853] font-medium text-sm md:text-base hover:underline transition-colors"
+          className="inline-flex items-center gap-2 text-[#0F3853] font-semibold text-base md:text-lg hover:text-[#A0C82E] transition-all duration-300 group"
         >
-          Ver detalles completos del sistema &rarr;
+          Ver detalles completos del sistema
+          <span className="group-hover:translate-x-2 transition-transform duration-300">→</span>
         </Link>
       </div>
     </section>
