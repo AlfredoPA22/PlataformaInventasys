@@ -1,4 +1,4 @@
 export const pricePlanMock = {
-  basic: 59,
-  pro: 99,
+  basic: 299,
+  pro: 599,
 };
