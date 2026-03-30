@@ -32,8 +32,8 @@ const SuccessfulRegistration = () => {
 
   const systemUrl =
     system === "RESERVAYA"
-      ? import.meta.env.VITE_CLIENT_RESERVAYA
-      : import.meta.env.VITE_CLIENT_INVENTORY;
+      ? `${import.meta.env.VITE_CLIENT_RESERVAYA}/login`
+      : `${import.meta.env.VITE_CLIENT_INVENTORY}/login`;
 
   const handleCopyPassword = () => {
     navigator.clipboard.writeText(password);
