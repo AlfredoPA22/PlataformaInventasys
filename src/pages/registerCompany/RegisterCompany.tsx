@@ -70,6 +70,7 @@ const RegisterCompany = () => {
           company,
           user_name: adminCredentials.user_name,
           password: adminCredentials.password,
+          system: subscriptionSystem,
         },
       });
     } else {
