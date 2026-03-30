@@ -1,0 +1,46 @@
+export const systemsMock = [
+  {
+    id: "MYMANAG",
+    name: "MyManag",
+    subtitle: "Sistema de Inventario",
+    tagline: "Control total de tu inventario",
+    description:
+      "Administra productos, almacenes, compras y ventas en un solo lugar. La herramienta ideal para pymes que necesitan control de stock sin complicaciones.",
+    icon: "📦",
+    color: "#A0C82E",
+    colorBg: "rgba(160, 200, 46, 0.08)",
+    colorBorder: "rgba(160, 200, 46, 0.25)",
+    colorText: "#5a7a12",
+    detailRoute: "/detalles-sistema",
+    plansRoute: "/planes-sistema?system=MYMANAG",
+    keyFeatures: [
+      "Control de stock en tiempo real",
+      "Gestión de múltiples almacenes",
+      "Compras, ventas y pagos integrados",
+      "Productos serializados y no serializados",
+      "Reportes avanzados y exportación PDF",
+    ],
+  },
+  {
+    id: "RESERVAYA",
+    name: "ReservaYa",
+    subtitle: "Sistema de Reservas",
+    tagline: "Gestión inteligente de reservas",
+    description:
+      "Administra turnos, disponibilidad y reservas de clientes en tiempo real. Ideal para salones, clínicas, restaurantes y cualquier negocio que trabaje con citas.",
+    icon: "📅",
+    color: "#3B82F6",
+    colorBg: "rgba(59, 130, 246, 0.08)",
+    colorBorder: "rgba(59, 130, 246, 0.25)",
+    colorText: "#1d4ed8",
+    detailRoute: "/detalles-reservaya",
+    plansRoute: "/planes-sistema?system=RESERVAYA",
+    keyFeatures: [
+      "Calendario de disponibilidad en tiempo real",
+      "Gestión de múltiples sedes y servicios",
+      "Notificaciones automáticas a clientes",
+      "Reportes de ocupación y rendimiento",
+      "Formularios de reserva personalizables",
+    ],
+  },
+];

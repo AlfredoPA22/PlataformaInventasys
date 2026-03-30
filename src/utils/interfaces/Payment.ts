@@ -3,6 +3,7 @@ import type { ICompany } from "./Company";
 export interface IPayment {
   _id: string;
   company: ICompany;
+  system: string;
   plan: string;
   amount: number;
   currency: string;
@@ -27,4 +28,5 @@ export interface IPaymentInput {
   method: string;
   plan: string;
   proof_url: string;
+  system?: string;
 }

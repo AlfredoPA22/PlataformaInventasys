@@ -1,5 +1,14 @@
 import type { IPayment } from "./Payment";
 
+export interface ICompanySubscription {
+  system: string;
+  plan: string;
+  status: string;
+  trial_expires_at?: string;
+  subscription_expires_at?: string;
+  notified_before_expiration?: boolean;
+}
+
 export interface ICompanyInput {
   name: string;
   legal_name?: string;
@@ -10,6 +19,7 @@ export interface ICompanyInput {
   country?: string;
   plan: string;
   currency: string;
+  system?: string;
 }
 
 export interface ICompany {
@@ -27,6 +37,7 @@ export interface ICompany {
   status: string;
   trial_expires_at: Date;
   subscription_expires_at: Date;
+  subscriptions?: ICompanySubscription[];
 }
 
 export interface ICompanyWithPayment {
@@ -44,5 +55,6 @@ export interface ICompanyWithPayment {
   status: string;
   trial_expires_at: Date;
   subscription_expires_at: Date;
+  subscriptions?: ICompanySubscription[];
   latest_payment: IPayment;
 }

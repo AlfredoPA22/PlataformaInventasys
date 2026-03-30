@@ -1,9 +1,10 @@
 import { CompanyPlan } from "../enums/companyPlan.enum";
 import { pricePlanMock } from "./pricePlanMock";
 
-export const plansMock = [
+export const myManagPlansMock = [
   {
     id: CompanyPlan.FREE,
+    system: "MYMANAG",
     name: "Gratis",
     price: "0 Bs / 7 días",
     description:
@@ -24,6 +25,7 @@ export const plansMock = [
   },
   {
     id: CompanyPlan.BASIC,
+    system: "MYMANAG",
     name: "Básico",
     price: `${pricePlanMock.basic}bs / mes`,
     description:
@@ -45,6 +47,7 @@ export const plansMock = [
   },
   {
     id: CompanyPlan.PRO,
+    system: "MYMANAG",
     name: "Pro",
     price: `${pricePlanMock.pro}bs / mes`,
     description:
@@ -68,3 +71,69 @@ export const plansMock = [
     ],
   },
 ];
+
+export const reservaYaPlansMock = [
+  {
+    id: CompanyPlan.FREE,
+    system: "RESERVAYA",
+    name: "Gratis",
+    price: "0 Bs / 7 días",
+    description: "Prueba el sistema de reservas sin compromiso.",
+    features: [
+      "1 sede o local",
+      "Hasta 5 servicios",
+      "1 usuario",
+      "Hasta 3 reservas por día",
+      "Calendario básico de disponibilidad",
+      "Gestión manual de reservas",
+      "Soporte por email (respuesta en 48h)",
+    ],
+  },
+  {
+    id: CompanyPlan.BASIC,
+    system: "RESERVAYA",
+    name: "Básico",
+    price: "199bs / mes",
+    description: "Ideal para negocios con flujo constante de reservas.",
+    features: [
+      "Hasta 3 sedes o locales",
+      "Hasta 50 servicios",
+      "Hasta 5 usuarios",
+      "Reservas ilimitadas",
+      "Calendario avanzado de disponibilidad",
+      "Gestión de turnos y horarios",
+      "Notificaciones automáticas a clientes",
+      "Reportes básicos de ocupación",
+      "Soporte por email (respuesta en 24h)",
+    ],
+  },
+  {
+    id: CompanyPlan.PRO,
+    system: "RESERVAYA",
+    name: "Pro",
+    price: "399bs / mes",
+    description:
+      "Para negocios con alto volumen de reservas y múltiples sedes.",
+    features: [
+      "Sedes ilimitadas",
+      "Servicios ilimitados",
+      "Usuarios ilimitados",
+      "Reservas ilimitadas",
+      "Calendario avanzado con gestión de recursos",
+      "Notificaciones automáticas (email y WhatsApp)",
+      "Reportes avanzados de ocupación y rendimiento",
+      "Panel de análisis de clientes frecuentes",
+      "Personalización de formularios de reserva",
+      "Soporte prioritario (email y WhatsApp, respuesta en 6h)",
+      "Acceso anticipado a nuevas funciones",
+    ],
+  },
+];
+
+// Backward compatibility
+export const plansMock = myManagPlansMock;
+
+export const getPlansBySystem = (system: string) => {
+  if (system === "RESERVAYA") return reservaYaPlansMock;
+  return myManagPlansMock;
+};

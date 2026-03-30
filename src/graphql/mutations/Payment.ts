@@ -11,6 +11,7 @@ export const CREATE_PAYMENT = gql`
     $method: String!
     $plan: String!
     $proof_url: String!
+    $system: String
   ) {
     createPaymentLanding(
       paymentLandingInput: {
@@ -23,10 +24,12 @@ export const CREATE_PAYMENT = gql`
         method: $method
         plan: $plan
         proof_url: $proof_url
+        system: $system
       }
     ) {
       _id
       amount
+      system
       billing_info {
         nit
         name

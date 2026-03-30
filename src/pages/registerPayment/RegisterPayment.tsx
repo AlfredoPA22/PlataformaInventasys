@@ -43,6 +43,7 @@ const RegisterPayment = () => {
   const state = location.state as {
     company: ICompany;
     plan: CompanyPlan;
+    system?: string;
   } | null;
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const RegisterPayment = () => {
 
   const company = state!.company;
   const plan = state!.plan;
+  const system = state?.system ?? "MYMANAG";
   const amount =
     plan === CompanyPlan.BASIC
       ? pricePlanMock.basic
@@ -114,6 +116,7 @@ const RegisterPayment = () => {
     method: PaymentMethod.QR,
     plan: plan,
     proof_url: "",
+    system: system,
   };
 
   const {

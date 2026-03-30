@@ -11,10 +11,29 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import useAuth from "@/pages/auth/hooks/useAuth";
 import type { RootState } from "@/redux/store";
 import { CompanyPlan } from "@/utils/enums/companyPlan.enum";
-import { Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
+const sistemas = [
+  {
+    id: "MYMANAG",
+    name: "MyManag",
+    subtitle: "Inventario",
+    icon: "📦",
+    detailRoute: "/detalles-sistema",
+    plansRoute: "/planes-sistema?system=MYMANAG",
+  },
+  {
+    id: "RESERVAYA",
+    name: "ReservaYa",
+    subtitle: "Reservas",
+    icon: "📅",
+    detailRoute: "/detalles-reservaya",
+    plansRoute: "/planes-sistema?system=RESERVAYA",
+  },
+];
 
 const Header: React.FC = () => {
   const { logout } = useAuth();
@@ -41,34 +60,76 @@ const Header: React.FC = () => {
 
         {/* Menú en desktop */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
           >
             Inicio
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full"></span>
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full" />
           </Link>
-          <Link
-            to="/detalles-sistema"
-            className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
-          >
-            Detalles
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/planes-sistema"
-            className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
-          >
-            Planes
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full"></span>
-          </Link>
+
+          {/* Dropdown Sistemas / Detalles */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 text-gray-700 hover:text-[#0F3953] font-medium transition-colors duration-300 outline-none cursor-pointer">
+              Sistemas
+              <ChevronDown className="w-4 h-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-52">
+              <DropdownMenuLabel className="text-xs text-gray-400">
+                Ver detalles
+              </DropdownMenuLabel>
+              {sistemas.map((s) => (
+                <DropdownMenuItem key={s.id} asChild>
+                  <Link
+                    to={s.detailRoute}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>{s.icon}</span>
+                    <div>
+                      <p className="font-semibold text-sm">{s.name}</p>
+                      <p className="text-xs text-gray-500">{s.subtitle}</p>
+                    </div>
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Dropdown Planes */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 text-gray-700 hover:text-[#0F3953] font-medium transition-colors duration-300 outline-none cursor-pointer">
+              Planes
+              <ChevronDown className="w-4 h-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-52">
+              <DropdownMenuLabel className="text-xs text-gray-400">
+                Ver planes por sistema
+              </DropdownMenuLabel>
+              {sistemas.map((s) => (
+                <DropdownMenuItem key={s.id} asChild>
+                  <Link
+                    to={s.plansRoute}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>{s.icon}</span>
+                    <div>
+                      <p className="font-semibold text-sm">{s.name}</p>
+                      <p className="text-xs text-gray-500">{s.subtitle}</p>
+                    </div>
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Link
             to="/nosotros"
             className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
           >
             Nosotros
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full"></span>
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full" />
           </Link>
+
           <Button
             asChild
             className="bg-[#A0C82E] text-[#0F3853] hover:bg-yellow-400 font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
@@ -77,6 +138,7 @@ const Header: React.FC = () => {
               Probar gratis
             </a>
           </Button>
+
           {user.isAuthenticated && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -123,7 +185,7 @@ const Header: React.FC = () => {
             </SheetTrigger>
             <SheetContent side="left" className="space-y-1 p-6">
               {user.isAuthenticated && (
-                <p className="text-sm text-gray-700">Hola, {user.fullName}</p>
+                <p className="text-sm text-gray-700 mb-2">Hola, {user.fullName}</p>
               )}
               <Link
                 to="/"
@@ -132,42 +194,70 @@ const Header: React.FC = () => {
               >
                 Inicio
               </Link>
-              <Link
-                to="/mi-cuenta"
-                onClick={() => setOpen(false)}
-                className="block text-lg text-gray-700 hover:text-blue-600"
-              >
-                Mi cuenta
-              </Link>
-              <Link
-                to="/detalles-sistema"
-                onClick={() => setOpen(false)}
-                className="block text-lg text-gray-700 hover:text-blue-600"
-              >
-                Detalles
-              </Link>
-              <Link
-                to="/planes-sistema"
-                onClick={() => setOpen(false)}
-                className="block text-lg text-gray-700 hover:text-blue-600"
-              >
-                Planes
-              </Link>
+
+              {/* Sistemas mobile */}
+              <div className="pt-1">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+                  Sistemas
+                </p>
+                {sistemas.map((s) => (
+                  <Link
+                    key={`detail-${s.id}`}
+                    to={s.detailRoute}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-2 py-1.5 pl-2 text-gray-700 hover:text-blue-600"
+                  >
+                    <span className="text-lg">{s.icon}</span>
+                    <span className="text-base">{s.name}</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Planes mobile */}
+              <div className="pt-1">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+                  Planes
+                </p>
+                {sistemas.map((s) => (
+                  <Link
+                    key={`plans-${s.id}`}
+                    to={s.plansRoute}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-2 py-1.5 pl-2 text-gray-700 hover:text-blue-600"
+                  >
+                    <span className="text-lg">{s.icon}</span>
+                    <span className="text-base">{s.name}</span>
+                  </Link>
+                ))}
+              </div>
+
               <Link
                 to="/nosotros"
                 onClick={() => setOpen(false)}
-                className="block text-lg text-gray-700 hover:text-blue-600"
+                className="block text-lg text-gray-700 hover:text-blue-600 pt-1"
               >
                 Nosotros
               </Link>
+
+              {user.isAuthenticated && (
+                <Link
+                  to="/mi-cuenta"
+                  onClick={() => setOpen(false)}
+                  className="block text-lg text-gray-700 hover:text-blue-600"
+                >
+                  Mi cuenta
+                </Link>
+              )}
+
               <Button
                 asChild
-            className="bg-[#A0C82E] text-[#0F3853] hover:bg-yellow-400"
+                className="bg-[#A0C82E] text-[#0F3853] hover:bg-yellow-400 w-full mt-2"
               >
                 <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
                   Probar gratis
                 </a>
               </Button>
+
               {user.isAuthenticated && (
                 <Button
                   variant="outline"

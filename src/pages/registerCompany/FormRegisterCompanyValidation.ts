@@ -18,4 +18,5 @@ export const schemaFormRegisterCompany = object().shape({
   country: string().optional(),
   plan: string().required("Debe seleccionar un plan"),
   currency: string().required("Debe seleccionar una moneda"),
+  system: string().required("Debe seleccionar un sistema"),
 });

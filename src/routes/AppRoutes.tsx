@@ -3,6 +3,7 @@ import Login from "@/pages/auth/pages/Login";
 import ContactPage from "@/pages/contact/Contact";
 import Home from "@/pages/home/Home";
 import SystemDetail from "@/pages/systemDetail/SystemDetail";
+import SystemDetailReservaYa from "@/pages/systemDetail/SystemDetailReservaYa";
 import SystemPlans from "@/pages/systemPlans/SystemPlans";
 import type { FC } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -14,6 +15,7 @@ const AppRoutes: FC = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="detalles-sistema" element={<SystemDetail />} />
+        <Route path="detalles-reservaya" element={<SystemDetailReservaYa />} />
         <Route path="planes-sistema" element={<SystemPlans />} />
         <Route path="nosotros" element={<ContactPage />} />
         <Route path="login" element={<Login />} />
