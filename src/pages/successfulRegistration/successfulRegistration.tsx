@@ -17,6 +17,7 @@ const SuccessfulRegistration = () => {
     };
     user_name: string;
     password: string;
+    system?: string;
   } | null;
 
   useEffect(() => {
@@ -27,7 +28,12 @@ const SuccessfulRegistration = () => {
 
   if (!state) return null;
 
-  const { company, user_name, password } = state;
+  const { company, user_name, password, system } = state;
+
+  const systemUrl =
+    system === "RESERVAYA"
+      ? import.meta.env.VITE_CLIENT_RESERVAYA
+      : import.meta.env.VITE_CLIENT_INVENTORY;
 
   const handleCopyPassword = () => {
     navigator.clipboard.writeText(password);
@@ -154,8 +160,8 @@ const SuccessfulRegistration = () => {
                   </h3>
                   <p className="text-sm text-gray-700 leading-relaxed">
                     Haz clic en el botón de abajo para iniciar sesión en el sistema.
-                    Una vez dentro, podrás cambiar tu contraseña y comenzar a gestionar
-                    tu inventario.
+                    Una vez dentro, podrás cambiar tu contraseña y comenzar a usar
+                    la plataforma.
                   </p>
                 </div>
               </div>
@@ -165,9 +171,7 @@ const SuccessfulRegistration = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button
                 className="flex-1 bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-6 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                onClick={() =>
-                  window.open(import.meta.env.VITE_CLIENT_INVENTORY, "_blank")
-                }
+                onClick={() => window.open(systemUrl, "_blank")}
               >
                 Iniciar sesión en el sistema
               </Button>
