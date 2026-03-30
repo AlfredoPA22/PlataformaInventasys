@@ -171,7 +171,7 @@ const SuccessfulRegistration = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button
                 className="flex-1 bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-6 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                onClick={() => window.open(systemUrl, "_blank")}
+                onClick={() => { window.location.href = systemUrl; }}
               >
                 Iniciar sesión en el sistema
               </Button>
