@@ -109,7 +109,7 @@ const RegisterCompany = () => {
 
   // Info cards based on current form values
   const currentSystemInfo = systemsMock.find((s) => s.id === values.system);
-  const currentPlanInfo = getPlansBySystem(values.system).find(
+  const currentPlanInfo = getPlansBySystem(values.system ?? '').find(
     (p) => p.id === values.plan
   );
 
@@ -386,7 +386,7 @@ const RegisterCompany = () => {
                       />
                     </SelectTrigger>
                     <SelectContent>
-                      {getPlansBySystem(values.system).map((p) => (
+                      {getPlansBySystem(values.system ?? '').map((p) => (
                         <SelectItem key={p.id} value={p.id}>
                           {p.name} — {p.price}
                         </SelectItem>
