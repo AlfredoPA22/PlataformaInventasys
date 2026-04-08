@@ -65,3 +65,38 @@ export const ACTIVATE_COMPANY = gql`
     }
   }
 `;
+
+export const ADJUST_SUBSCRIPTION = gql`
+  mutation AdjustSubscription(
+    $companyId: String!
+    $system: String!
+    $plan: String!
+    $status: String!
+    $subscription_expires_at: String
+    $trial_expires_at: String
+  ) {
+    adjustSubscription(
+      input: {
+        companyId: $companyId
+        system: $system
+        plan: $plan
+        status: $status
+        subscription_expires_at: $subscription_expires_at
+        trial_expires_at: $trial_expires_at
+      }
+    ) {
+      _id
+      plan
+      status
+      subscription_expires_at
+      trial_expires_at
+      subscriptions {
+        system
+        plan
+        status
+        trial_expires_at
+        subscription_expires_at
+      }
+    }
+  }
+`;
