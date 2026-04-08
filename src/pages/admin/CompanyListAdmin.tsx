@@ -143,13 +143,13 @@ const getExpiresDate = (company: ICompanyWithPayment): string => {
     const active = company.subscriptions.find((s) => s.status === "activo");
     const sub = active || company.subscriptions[0];
     const rawDate = sub.plan === "prueba" ? sub.trial_expires_at : sub.subscription_expires_at;
-    if (rawDate) return getDate(rawDate);
+    if (rawDate) return getDate(rawDate as unknown as Date) ?? "—";
   }
   const rawDate =
     company.plan === "prueba"
       ? company.trial_expires_at
       : company.subscription_expires_at;
-  return rawDate ? getDate(rawDate) : "—";
+  return rawDate ? (getDate(rawDate as unknown as Date) ?? "—") : "—";
 };
 
 const toDateInputValue = (rawDate: string | Date | null | undefined): string => {
