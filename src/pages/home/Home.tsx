@@ -1,123 +1,173 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import SystemsSection from "./SystemsSection";
+import { Zap, ShieldCheck, BarChart3 } from "lucide-react";
+
+const benefits = [
+  {
+    Icon: Zap,
+    iconBg: "bg-amber-50",
+    iconColor: "text-amber-500",
+    title: "Tiempo Real",
+    description: "Stock, ventas y compras actualizados al instante en todos tus almacenes. Sin recargar, sin demoras.",
+  },
+  {
+    Icon: ShieldCheck,
+    iconBg: "bg-blue-50",
+    iconColor: "text-blue-500",
+    title: "Seguro y Confiable",
+    description: "Tus datos protegidos en la nube. Accede desde cualquier dispositivo con total seguridad.",
+  },
+  {
+    Icon: BarChart3,
+    iconBg: "bg-[#A0C82E]/10",
+    iconColor: "text-[#6a8c1e]",
+    title: "Reportes Avanzados",
+    description: "8 tipos de reportes exportables a PDF: ventas, compras, rentabilidad, stock bajo, cuentas por cobrar y más.",
+  },
+];
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
 
   return (
     <div className="font-sans text-gray-800 bg-white">
-      {/* Hero principal */}
-      <section className="relative bg-gradient-to-br from-[#0f3853] via-[#0d4a6b] to-[#0f3853] text-white py-32 px-4 text-center overflow-hidden">
-        {/* Efectos de fondo animados */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-[#A0C82E] rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
-        <div className="absolute inset-0 opacity-20 bg-[url('/grid.svg')] bg-cover" />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 animate-fade-in">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 animate-slide-up">
-            Soluciones de gestión para tu negocio con{" "}
-            <span className="text-[#A0C82E] drop-shadow-lg">Inventasys</span>
+      {/* ── Hero ──────────────────────────────────────────────── */}
+      <section className="relative bg-[#0f3853] text-white py-36 px-4 text-center overflow-hidden">
+
+        {/* Dot-grid pattern */}
+        <div
+          className="absolute inset-0 opacity-100"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(160,200,46,0.18) 1px, transparent 1px)",
+            backgroundSize: "30px 30px",
+          }}
+        />
+
+        {/* Soft ambient glows */}
+        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-[#A0C82E] rounded-full blur-3xl animate-pulse-soft" />
+        <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-sky-500 rounded-full blur-3xl animate-pulse-soft" style={{ animationDelay: "2s" }} />
+
+        <div className="relative z-10 max-w-4xl mx-auto">
+
+          {/* Eyebrow badge */}
+          <div className="animate-fade-in inline-flex items-center gap-2 border border-white/20 bg-white/8 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-medium text-white/80 mb-8 tracking-wide">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#A0C82E]" />
+            Plataforma SaaS para pymes · Bolivia
+          </div>
+
+          <h1 className="animate-slide-up text-4xl md:text-6xl lg:text-[4.5rem] font-bold leading-[1.1] tracking-tight mb-6">
+            Gestiona tu negocio con{" "}
+            <span className="text-[#A0C82E]">Inventasys</span>
           </h1>
-          <p className="text-lg md:text-xl lg:text-2xl mb-10 max-w-3xl mx-auto text-gray-100 leading-relaxed animate-slide-up delay-200">
+
+          <p className="animate-slide-up delay-200 text-base md:text-xl text-white/65 leading-relaxed max-w-2xl mx-auto mb-10">
             Desde el control de inventario hasta la gestión de reservas, tenemos
-            el sistema que tu empresa necesita. Simple, efectivo y sin
-            complicaciones.
+            el sistema que tu empresa necesita. Simple, efectivo y sin complicaciones.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up delay-300">
+
+          <div className="animate-slide-up delay-300 flex flex-col sm:flex-row gap-3 justify-center items-center">
             <Button
-              className="bg-[#A0C82E] text-gray-900 font-semibold py-4 px-10 text-lg rounded-lg shadow-2xl hover:bg-yellow-400 hover:scale-105 transition-all duration-300 cursor-pointer transform"
-              onClick={() => {
-                document.getElementById("sistemas")?.scrollIntoView({ behavior: "smooth" });
-              }}
+              className="bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-3 px-8 text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+              onClick={() =>
+                document.getElementById("sistemas")?.scrollIntoView({ behavior: "smooth" })
+              }
             >
               Ver sistemas disponibles
             </Button>
             <Button
-              variant="outline"
-              className="border-2 border-white text-[#0f3853] font-semibold py-4 px-10 text-lg rounded-lg hover:bg-white hover:text-[#0f3853] transition-all duration-300 cursor-pointer transform hover:scale-105"
+              variant="ghost"
+              className="border border-white/25 text-white/80 hover:text-white hover:bg-white/10 font-medium py-3 px-8 text-sm rounded-lg transition-all duration-300 cursor-pointer"
               onClick={() => navigate("/nosotros")}
             >
               Conocer más
             </Button>
           </div>
+
+          <p className="animate-fade-in delay-500 mt-6 text-xs text-white/35 tracking-wide">
+            7 días gratis · Sin tarjeta de crédito · Cancela cuando quieras
+          </p>
         </div>
 
-        {/* Olas decorativas en la parte inferior */}
+        {/* Wave divider */}
         <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-20">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
+          <svg
+            viewBox="0 0 1440 80"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full block"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0 80L80 68C160 56 320 32 480 22C640 12 800 16 960 24C1120 32 1280 44 1360 50L1440 56V80H0Z"
+              fill="white"
+            />
           </svg>
         </div>
       </section>
 
-      {/* Sección de beneficios destacados */}
-      <section className="py-16 px-4 bg-white -mt-8 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: "⚡",
-                title: "Tiempo Real",
-                description: "Actualización instantánea de tus datos",
-              },
-              {
-                icon: "🔒",
-                title: "Seguro",
-                description: "Tus datos protegidos con encriptación",
-              },
-              {
-                icon: "📊",
-                title: "Reportes",
-                description: "Análisis detallados de tu negocio",
-              },
-            ].map((benefit, index) => (
+      {/* ── Benefit cards ────────────────────────────────────── */}
+      <section className="py-14 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {benefits.map(({ Icon, iconBg, iconColor, title, description }, i) => (
               <div
-                key={index}
-                className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-6 border-2 border-gray-100 hover:border-[#A0C82E]/30 transition-all duration-300 transform hover:scale-105 text-center"
+                key={i}
+                className="flex items-start gap-4 p-6 rounded-xl border border-gray-100 hover:border-[#A0C82E]/30 hover:shadow-md bg-white transition-all duration-300"
               >
-                <div className="text-4xl mb-3">{benefit.icon}</div>
-                <h3 className="text-xl font-bold text-[#0F3853] mb-2">{benefit.title}</h3>
-                <p className="text-gray-600 text-sm">{benefit.description}</p>
+                <div className={`w-10 h-10 rounded-lg ${iconBg} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                  <Icon className={`w-5 h-5 ${iconColor}`} strokeWidth={1.8} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-[#0F3853] mb-1">{title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{description}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Sistemas disponibles */}
+      {/* ── Systems ──────────────────────────────────────────── */}
       <div id="sistemas">
         <SystemsSection />
       </div>
 
-      {/* Llamado final */}
-      <section className="py-20 px-6 bg-gradient-to-br from-[#0f3853] via-[#0d4a6b] to-[#0f3853] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-[#A0C82E] rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-72 h-72 bg-blue-400 rounded-full blur-3xl" />
-        </div>
-        <div className="max-w-3xl mx-auto text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+      {/* ── Final CTA ────────────────────────────────────────── */}
+      <section className="py-28 px-6 bg-[#0f3853] relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-100"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(160,200,46,0.12) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="absolute -top-40 -right-40 w-[400px] h-[400px] bg-[#A0C82E] rounded-full blur-3xl opacity-5" />
+        <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] bg-sky-400 rounded-full blur-3xl opacity-5" />
+
+        <div className="max-w-xl mx-auto text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
             ¿Listo para impulsar tu negocio?
           </h2>
-          <p className="text-gray-200 mb-10 text-base md:text-xl leading-relaxed">
+          <p className="text-white/55 mb-10 text-base leading-relaxed">
             Elige el sistema que necesitas y comienza con una prueba gratuita de
             7 días. Sin tarjeta de crédito, sin compromisos.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
-              className="bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-5 px-10 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-3 px-7 text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
               onClick={() => navigate("/planes-sistema?system=MYMANAG")}
             >
-              📦 Planes MyManag
+              Planes MyManag
             </Button>
             <Button
-              className="bg-[#3B82F6] hover:bg-[#2563eb] text-white font-semibold py-5 px-10 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="bg-white/10 hover:bg-white/18 border border-white/20 text-white font-medium py-3 px-7 text-sm rounded-lg transition-all duration-300"
               onClick={() => navigate("/planes-sistema?system=RESERVAYA")}
             >
-              📅 Planes ReservaYa
+              Planes ReservaYa
             </Button>
           </div>
         </div>

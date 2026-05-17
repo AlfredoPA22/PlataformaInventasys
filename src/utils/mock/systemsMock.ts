@@ -3,9 +3,9 @@ export const systemsMock = [
     id: "MYMANAG",
     name: "MyManag",
     subtitle: "Sistema de Inventario",
-    tagline: "Control total de tu inventario",
+    tagline: "Stock, ventas y rentabilidad en un solo lugar",
     description:
-      "Administra productos, almacenes, compras y ventas en un solo lugar. La herramienta ideal para pymes que necesitan control de stock sin complicaciones.",
+      "Administra productos, almacenes, compras, ventas y rentabilidad en un solo lugar. Control de stock con alertas automáticas y 8 reportes en PDF pensado para pymes.",
     icon: "📦",
     color: "#A0C82E",
     colorBg: "rgba(160, 200, 46, 0.08)",
@@ -14,11 +14,11 @@ export const systemsMock = [
     detailRoute: "/detalles-sistema",
     plansRoute: "/planes-sistema?system=MYMANAG",
     keyFeatures: [
-      "Control de stock en tiempo real",
-      "Gestión de múltiples almacenes",
-      "Compras, ventas y pagos integrados",
+      "Stock en tiempo real con alertas de stock bajo",
+      "Gestión de múltiples almacenes y transferencias",
+      "Compras, ventas y crédito a clientes integrados",
       "Productos serializados y no serializados",
-      "Reportes avanzados y exportación PDF",
+      "8 reportes avanzados exportables en PDF",
     ],
   },
   {

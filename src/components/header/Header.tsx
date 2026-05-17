@@ -35,59 +35,66 @@ const sistemas = [
   },
 ];
 
+const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () => void }> = ({
+  to,
+  children,
+  onClick,
+}) => (
+  <Link
+    to={to}
+    onClick={onClick}
+    className="relative text-sm font-medium text-gray-600 hover:text-[#0F3853] transition-colors duration-200 group"
+  >
+    {children}
+    <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-[#A0C82E] transition-all duration-300 group-hover:w-full rounded-full" />
+  </Link>
+);
+
 const Header: React.FC = () => {
   const { logout } = useAuth();
-
   const user = useSelector((state: RootState) => state.authSlice);
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <header className="bg-white/95 backdrop-blur-md shadow-md py-4 sticky top-0 z-50 border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
+    <header className="bg-white/95 backdrop-blur-md border-b border-gray-100 py-3 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+
+        {/* Logo */}
         <Link
           to="/"
-          className="flex justify-center items-center gap-3 text-2xl font-bold group transition-transform duration-300 hover:scale-105"
+          className="flex items-center gap-2.5 group transition-opacity duration-200 hover:opacity-85"
         >
           <img
             src="https://res.cloudinary.com/dyyd4no6j/image/upload/v1750462264/icono_inventasys_ca6zei.png"
-            alt="Inventasys logo"
-            className="sm:h-16 h-10 w-auto transition-transform duration-300 group-hover:rotate-3"
+            alt="Inventasys"
+            className="sm:h-12 h-9 w-auto"
           />
-          <span className="text-2xl font-bold text-[#0F3853] sm:inline bg-gradient-to-r from-[#0F3853] to-[#A0C82E] bg-clip-text text-transparent">
+          <span className="text-xl font-bold bg-gradient-to-r from-[#0F3853] to-[#2a6d94] bg-clip-text text-transparent sm:inline hidden">
             Inventasys
           </span>
         </Link>
 
-        {/* Menú en desktop */}
-        <nav className="hidden md:flex items-center gap-6">
-          <Link
-            to="/"
-            className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
-          >
-            Inicio
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full" />
-          </Link>
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-7">
+          <NavLink to="/">Inicio</NavLink>
 
-          {/* Dropdown Sistemas / Detalles */}
+          {/* Sistemas dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-gray-700 hover:text-[#0F3953] font-medium transition-colors duration-300 outline-none cursor-pointer">
+            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0F3853] transition-colors duration-200 outline-none cursor-pointer">
               Sistemas
-              <ChevronDown className="w-4 h-4" />
+              <ChevronDown className="w-3.5 h-3.5 opacity-60" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-52">
-              <DropdownMenuLabel className="text-xs text-gray-400">
+            <DropdownMenuContent align="start" className="w-52 shadow-lg border-gray-100">
+              <DropdownMenuLabel className="text-[10px] text-gray-400 uppercase tracking-wider">
                 Ver detalles
               </DropdownMenuLabel>
               {sistemas.map((s) => (
                 <DropdownMenuItem key={s.id} asChild>
-                  <Link
-                    to={s.detailRoute}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <span>{s.icon}</span>
+                  <Link to={s.detailRoute} className="flex items-center gap-2.5 cursor-pointer px-3 py-2">
+                    <span className="text-base">{s.icon}</span>
                     <div>
-                      <p className="font-semibold text-sm">{s.name}</p>
-                      <p className="text-xs text-gray-500">{s.subtitle}</p>
+                      <p className="font-semibold text-sm text-gray-800">{s.name}</p>
+                      <p className="text-xs text-gray-400">{s.subtitle}</p>
                     </div>
                   </Link>
                 </DropdownMenuItem>
@@ -95,26 +102,23 @@ const Header: React.FC = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Dropdown Planes */}
+          {/* Planes dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-gray-700 hover:text-[#0F3953] font-medium transition-colors duration-300 outline-none cursor-pointer">
+            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0F3853] transition-colors duration-200 outline-none cursor-pointer">
               Planes
-              <ChevronDown className="w-4 h-4" />
+              <ChevronDown className="w-3.5 h-3.5 opacity-60" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-52">
-              <DropdownMenuLabel className="text-xs text-gray-400">
+            <DropdownMenuContent align="start" className="w-52 shadow-lg border-gray-100">
+              <DropdownMenuLabel className="text-[10px] text-gray-400 uppercase tracking-wider">
                 Ver planes por sistema
               </DropdownMenuLabel>
               {sistemas.map((s) => (
                 <DropdownMenuItem key={s.id} asChild>
-                  <Link
-                    to={s.plansRoute}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <span>{s.icon}</span>
+                  <Link to={s.plansRoute} className="flex items-center gap-2.5 cursor-pointer px-3 py-2">
+                    <span className="text-base">{s.icon}</span>
                     <div>
-                      <p className="font-semibold text-sm">{s.name}</p>
-                      <p className="text-xs text-gray-500">{s.subtitle}</p>
+                      <p className="font-semibold text-sm text-gray-800">{s.name}</p>
+                      <p className="text-xs text-gray-400">{s.subtitle}</p>
                     </div>
                   </Link>
                 </DropdownMenuItem>
@@ -122,17 +126,11 @@ const Header: React.FC = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Link
-            to="/nosotros"
-            className="text-gray-700 hover:text-[#0F3853] font-medium transition-colors duration-300 relative group"
-          >
-            Nosotros
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A0C82E] transition-all duration-300 group-hover:w-full" />
-          </Link>
+          <NavLink to="/nosotros">Nosotros</NavLink>
 
           <Button
             asChild
-            className="bg-[#A0C82E] text-[#0F3853] hover:bg-yellow-400 font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+            className="bg-[#0F3853] hover:bg-[#0d2f44] text-white text-sm font-medium px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
           >
             <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
               Probar gratis
@@ -142,32 +140,29 @@ const Header: React.FC = () => {
           {user.isAuthenticated && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="rounded-full border-2 border-transparent hover:border-[#A0C82E] transition-all duration-300 cursor-pointer transform hover:scale-110 shadow-md hover:shadow-lg">
+                <button className="rounded-full ring-2 ring-transparent hover:ring-[#A0C82E]/60 transition-all duration-300 cursor-pointer">
                   <img
                     src={
                       user.picture ||
                       "https://ui-avatars.com/api/?name=Usuario&background=0D8ABC&color=fff"
                     }
                     alt="avatar"
-                    className="w-9 h-9 rounded-full object-cover"
+                    className="w-8 h-8 rounded-full object-cover"
                   />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel className="text-sm font-semibold">
+              <DropdownMenuContent align="end" className="w-56 shadow-lg border-gray-100">
+                <DropdownMenuLabel className="text-sm font-semibold text-gray-800">
                   {user.fullName}
                 </DropdownMenuLabel>
                 <DropdownMenuItem asChild>
-                  <Link
-                    to="/mi-cuenta"
-                    className="text-xs text-gray-500 cursor-pointer"
-                  >
+                  <Link to="/mi-cuenta" className="text-xs text-gray-500 cursor-pointer">
                     Mi cuenta
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  className="text-sm text-red-600 cursor-pointer"
+                  className="text-sm text-red-500 cursor-pointer"
                   onClick={logout}
                 >
                   Cerrar sesión
@@ -177,27 +172,27 @@ const Header: React.FC = () => {
           )}
         </nav>
 
-        {/* Menú en mobile */}
+        {/* Mobile menu */}
         <div className="md:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger>
-              <Menu className="w-6 h-6 text-gray-700" />
+              <Menu className="w-5 h-5 text-gray-600" />
             </SheetTrigger>
-            <SheetContent side="left" className="space-y-1 p-6">
+            <SheetContent side="left" className="p-6 space-y-1">
               {user.isAuthenticated && (
-                <p className="text-sm text-gray-700 mb-2">Hola, {user.fullName}</p>
+                <p className="text-sm text-gray-500 mb-3">Hola, {user.fullName}</p>
               )}
+
               <Link
                 to="/"
                 onClick={() => setOpen(false)}
-                className="block text-lg text-gray-700 hover:text-blue-600"
+                className="block text-base font-medium text-gray-700 hover:text-[#A0C82E] py-1.5 transition-colors duration-200"
               >
                 Inicio
               </Link>
 
-              {/* Sistemas mobile */}
-              <div className="pt-1">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+              <div className="pt-2">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
                   Sistemas
                 </p>
                 {sistemas.map((s) => (
@@ -205,17 +200,16 @@ const Header: React.FC = () => {
                     key={`detail-${s.id}`}
                     to={s.detailRoute}
                     onClick={() => setOpen(false)}
-                    className="flex items-center gap-2 py-1.5 pl-2 text-gray-700 hover:text-blue-600"
+                    className="flex items-center gap-2 py-1.5 pl-1 text-gray-700 hover:text-[#A0C82E] transition-colors duration-200"
                   >
-                    <span className="text-lg">{s.icon}</span>
-                    <span className="text-base">{s.name}</span>
+                    <span>{s.icon}</span>
+                    <span className="text-sm font-medium">{s.name}</span>
                   </Link>
                 ))}
               </div>
 
-              {/* Planes mobile */}
-              <div className="pt-1">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+              <div className="pt-2">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
                   Planes
                 </p>
                 {sistemas.map((s) => (
@@ -223,10 +217,10 @@ const Header: React.FC = () => {
                     key={`plans-${s.id}`}
                     to={s.plansRoute}
                     onClick={() => setOpen(false)}
-                    className="flex items-center gap-2 py-1.5 pl-2 text-gray-700 hover:text-blue-600"
+                    className="flex items-center gap-2 py-1.5 pl-1 text-gray-700 hover:text-[#A0C82E] transition-colors duration-200"
                   >
-                    <span className="text-lg">{s.icon}</span>
-                    <span className="text-base">{s.name}</span>
+                    <span>{s.icon}</span>
+                    <span className="text-sm font-medium">{s.name}</span>
                   </Link>
                 ))}
               </div>
@@ -234,7 +228,7 @@ const Header: React.FC = () => {
               <Link
                 to="/nosotros"
                 onClick={() => setOpen(false)}
-                className="block text-lg text-gray-700 hover:text-blue-600 pt-1"
+                className="block text-base font-medium text-gray-700 hover:text-[#A0C82E] py-1.5 transition-colors duration-200"
               >
                 Nosotros
               </Link>
@@ -243,33 +237,32 @@ const Header: React.FC = () => {
                 <Link
                   to="/mi-cuenta"
                   onClick={() => setOpen(false)}
-                  className="block text-lg text-gray-700 hover:text-blue-600"
+                  className="block text-base font-medium text-gray-700 hover:text-[#A0C82E] py-1.5 transition-colors duration-200"
                 >
                   Mi cuenta
                 </Link>
               )}
 
-              <Button
-                asChild
-                className="bg-[#A0C82E] text-[#0F3853] hover:bg-yellow-400 w-full mt-2"
-              >
-                <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
-                  Probar gratis
-                </a>
-              </Button>
-
-              {user.isAuthenticated && (
+              <div className="pt-3 space-y-2">
                 <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => {
-                    logout();
-                    setOpen(false);
-                  }}
+                  asChild
+                  className="bg-[#0F3853] hover:bg-[#0d2f44] text-white w-full text-sm font-medium"
                 >
-                  Cerrar sesión
+                  <a href={`/registrar-empresa?plan=${CompanyPlan.FREE}`}>
+                    Probar gratis
+                  </a>
                 </Button>
-              )}
+
+                {user.isAuthenticated && (
+                  <Button
+                    variant="outline"
+                    className="w-full text-sm text-red-500 border-red-200 hover:bg-red-50"
+                    onClick={() => { logout(); setOpen(false); }}
+                  >
+                    Cerrar sesión
+                  </Button>
+                )}
+              </div>
             </SheetContent>
           </Sheet>
         </div>

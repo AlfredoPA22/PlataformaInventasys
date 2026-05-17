@@ -8,43 +8,52 @@ import {
 } from "@/components/ui/carousel";
 import { myManagPlansMock } from "@/utils/mock/planMock";
 import { useNavigate } from "react-router-dom";
+import {
+  Package,
+  Warehouse,
+  ShoppingCart,
+  BarChart3,
+  Users,
+  ClipboardList,
+  Check,
+} from "lucide-react";
 
 const features = [
   {
-    icon: "📦",
-    title: "Control de stock en tiempo real",
+    Icon: Package,
+    title: "Stock en tiempo real con alertas",
     description:
-      "Visualiza la disponibilidad por almacén al instante. El sistema actualiza automáticamente el stock al registrar compras, ventas o transferencias.",
+      "Visualiza la disponibilidad por almacén al instante. Configura niveles mínimos y recibe alertas automáticas de stock bajo antes de quedarte sin existencias.",
   },
   {
-    icon: "🏪",
+    Icon: Warehouse,
     title: "Múltiples almacenes",
     description:
       "Gestiona varios depósitos o sucursales desde un solo panel. Transfiere productos entre almacenes con validación automática de disponibilidad.",
   },
   {
-    icon: "🛒",
-    title: "Compras y ventas integradas",
+    Icon: ShoppingCart,
+    title: "Compras, ventas y crédito",
     description:
-      "Módulo completo de compras y ventas con control de crédito, pagos parciales y seguimiento de estados en tiempo real.",
+      "Módulo completo de compras y ventas con gestión de crédito a clientes, pagos parciales y control de cuentas por cobrar en tiempo real.",
   },
   {
-    icon: "📊",
-    title: "Reportes exportables",
+    Icon: BarChart3,
+    title: "8 reportes avanzados en PDF",
     description:
-      "Genera informes detallados en PDF sobre ventas, compras, inventario y productos más vendidos. Filtra por fecha, categoría, cliente o proveedor.",
+      "Ventas, compras, productos, valor de inventario, rentabilidad por producto y categoría, cuentas por cobrar y stock bajo. Filtra y exporta en PDF sin límites.",
   },
   {
-    icon: "👥",
+    Icon: Users,
     title: "Usuarios y roles",
     description:
       "Crea usuarios con diferentes niveles de acceso según su rol. Define permisos específicos para cada módulo del sistema.",
   },
   {
-    icon: "📋",
-    title: "Productos serializados",
+    Icon: ClipboardList,
+    title: "Productos serializados y por lote",
     description:
-      "Soporte para productos serializados y no serializados. Trazabilidad completa por número de serie o por lote según corresponda.",
+      "Soporte completo para productos con número de serie y productos por lote. Trazabilidad total desde la compra hasta la venta o transferencia.",
   },
 ];
 
@@ -72,181 +81,205 @@ const SystemDetail: React.FC = () => {
 
   return (
     <div className="font-sans text-gray-800 bg-white">
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[#0f3853] via-[#0d4a6b] to-[#0f3853] text-white py-28 px-4 text-center overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-[#A0C82E] rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
-        </div>
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-6">
-            <span>📦</span>
-            <span>Sistema de Inventario</span>
+
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="relative bg-[#0f3853] text-white py-32 px-4 text-center overflow-hidden">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(160,200,46,0.18) 1px, transparent 1px)",
+            backgroundSize: "30px 30px",
+          }}
+        />
+        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-[#A0C82E] rounded-full blur-3xl animate-pulse-soft" />
+        <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-sky-400 rounded-full blur-3xl animate-pulse-soft" style={{ animationDelay: "2s" }} />
+
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 border border-white/20 bg-white/8 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-medium text-white/80 mb-8 tracking-wide">
+            <Package className="w-3.5 h-3.5" />
+            Sistema de Inventario
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight mb-6">
             Controla tu inventario con{" "}
-            <span className="text-[#A0C82E] drop-shadow-lg">MyManag</span>
+            <span className="text-[#A0C82E]">MyManag</span>
           </h1>
-          <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto text-gray-100 leading-relaxed">
-            La plataforma integral para gestionar productos, almacenes, compras
-            y ventas. Pensada para pymes que necesitan control real sin
-            complicaciones.
+          <p className="text-base md:text-lg mb-10 max-w-2xl mx-auto text-white/65 leading-relaxed">
+            Gestiona productos, almacenes, compras, ventas y rentabilidad en un
+            solo lugar. Con alertas de stock bajo y 8 reportes avanzados en PDF,
+            pensado para pymes que necesitan control real.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
-              className="bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-4 px-10 text-lg rounded-lg shadow-2xl hover:scale-105 transition-all duration-300"
+              className="bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-3 px-8 text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
               onClick={() => navigate("/planes-sistema?system=MYMANAG")}
             >
               Ver planes y precios
             </Button>
             <Button
-              variant="outline"
-              className="border-2 border-white text-[#0f3853] font-semibold py-4 px-10 text-lg rounded-lg hover:bg-white transition-all duration-300 hover:scale-105"
-              onClick={() =>
-                navigate("/registrar-empresa?plan=prueba&system=MYMANAG")
-              }
+              variant="ghost"
+              className="border border-white/25 text-white/80 hover:text-white hover:bg-white/10 font-medium py-3 px-8 text-sm rounded-lg transition-all duration-300"
+              onClick={() => navigate("/registrar-empresa?plan=prueba&system=MYMANAG")}
             >
               Probar gratis
             </Button>
           </div>
         </div>
+
         <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-20">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" />
+          <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block" preserveAspectRatio="none">
+            <path d="M0 80L80 68C160 56 320 32 480 22C640 12 800 16 960 24C1120 32 1280 44 1360 50L1440 56V80H0Z" fill="white" />
           </svg>
         </div>
       </section>
 
-      {/* Casos de uso */}
+      {/* ── Use cases ────────────────────────────────────────── */}
       <section className="py-16 px-4 bg-white">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-2xl font-bold text-[#0F3853] mb-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-xs font-semibold text-[#A0C82E] uppercase tracking-widest mb-3">
+            ¿Para quién es?
+          </p>
+          <h2 className="text-2xl font-bold text-[#0F3853] mb-10">
             Ideal para todo tipo de negocios
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
             {useCases.map((uc, i) => (
               <div
                 key={i}
-                className="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-green-100 hover:border-[#A0C82E] hover:bg-[#A0C82E]/5 transition-all duration-200"
+                className="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-[#A0C82E]/40 hover:bg-[#A0C82E]/5 hover:-translate-y-0.5 transition-all duration-200"
               >
-                <span className="text-3xl">{uc.icon}</span>
-                <span className="text-xs font-semibold text-gray-700 text-center">{uc.label}</span>
+                <span className="text-2xl">{uc.icon}</span>
+                <span className="text-[11px] font-semibold text-gray-600 text-center leading-tight">
+                  {uc.label}
+                </span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Características */}
-      <section className="py-20 px-4 bg-gray-50">
+      {/* ── Features ─────────────────────────────────────────── */}
+      <section className="py-20 px-4 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-4xl font-extrabold text-[#0F3853] mb-4">
+            <p className="text-xs font-semibold text-[#A0C82E] uppercase tracking-widest mb-3">
+              Módulos
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F3853] tracking-tight mb-4">
               Todo lo que necesitas para gestionar tu inventario
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Herramientas diseñadas para simplificar tu operación y darte
-              visibilidad total de tu negocio
+            <p className="text-gray-500 text-base max-w-xl mx-auto leading-relaxed">
+              Herramientas diseñadas para simplificar tu operación y darte visibilidad total de tu negocio
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {features.map(({ Icon, title, description }, i) => (
               <div
                 key={i}
-                className="bg-white rounded-2xl p-6 border-2 border-green-100 hover:border-[#A0C82E] hover:shadow-lg transition-all duration-300"
+                className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#A0C82E]/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
               >
-                <div className="w-12 h-12 bg-[#A0C82E]/15 rounded-xl flex items-center justify-center text-2xl mb-4">
-                  {feature.icon}
+                <div className="w-11 h-11 bg-[#A0C82E]/10 rounded-xl flex items-center justify-center mb-4">
+                  <Icon className="w-5 h-5 text-[#6a8c1e]" strokeWidth={1.7} />
                 </div>
-                <h3 className="text-lg font-bold text-[#0F3853] mb-2">{feature.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
+                <h3 className="text-base font-bold text-[#0F3853] mb-2 leading-snug">
+                  {title}
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Capturas del sistema */}
+      {/* ── Screenshots ──────────────────────────────────────── */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-extrabold text-[#0F3853] mb-4">
+          <p className="text-xs font-semibold text-[#A0C82E] uppercase tracking-widest mb-3">
+            Capturas
+          </p>
+          <h2 className="text-3xl font-bold text-[#0F3853] tracking-tight mb-4">
             El sistema en acción
           </h2>
-          <p className="text-gray-600 text-lg mb-12 max-w-xl mx-auto">
+          <p className="text-gray-500 text-base mb-12 max-w-md mx-auto leading-relaxed">
             Explora las diferentes pantallas y funcionalidades de MyManag
           </p>
           <Carousel className="w-full max-w-5xl mx-auto">
             <CarouselContent className="-ml-2 md:-ml-4">
               {screenshots.map((img, idx) => (
-                <CarouselItem
-                  key={idx}
-                  className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3"
-                >
-                  <div className="p-2 group">
-                    <div className="relative overflow-hidden rounded-xl shadow-lg border-2 border-gray-100 hover:border-[#A0C82E]/50 transition-all duration-300">
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#A0C82E]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <CarouselItem key={idx} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
+                  <div className="group p-1">
+                    <div className="relative overflow-hidden rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-[#A0C82E]/30 transition-all duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#A0C82E]/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <img
                         src={img}
                         alt={`Vista ${idx + 1}`}
-                        className="rounded-lg object-contain h-64 w-full transform group-hover:scale-105 transition-all duration-300"
+                        className="rounded-lg object-contain h-56 w-full"
                       />
                     </div>
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-0 md:-left-12 bg-white/90 hover:bg-white shadow-lg border-2 border-gray-200" />
-            <CarouselNext className="right-0 md:-right-12 bg-white/90 hover:bg-white shadow-lg border-2 border-gray-200" />
+            <CarouselPrevious className="left-0 md:-left-12 bg-white shadow-md border border-gray-200 hover:border-[#A0C82E]/40" />
+            <CarouselNext className="right-0 md:-right-12 bg-white shadow-md border border-gray-200 hover:border-[#A0C82E]/40" />
           </Carousel>
         </div>
       </section>
 
-      {/* Resumen de planes */}
-      <section className="py-20 px-4 bg-gray-50">
+      {/* ── Plans summary ────────────────────────────────────── */}
+      <section className="py-20 px-4 bg-slate-50">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-4xl font-extrabold text-[#0F3853] mb-4">
+          <p className="text-xs font-semibold text-[#A0C82E] uppercase tracking-widest mb-3">
+            Precios
+          </p>
+          <h2 className="text-3xl font-bold text-[#0F3853] tracking-tight mb-4">
             Planes disponibles
           </h2>
-          <p className="text-gray-600 text-lg mb-12 max-w-xl mx-auto">
+          <p className="text-gray-500 text-base mb-12 max-w-md mx-auto">
             Desde una prueba gratuita hasta funcionalidades ilimitadas
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            {myManagPlansMock.map((plan, i) => (
-              <div
-                key={i}
-                className={`rounded-2xl p-6 border-2 text-left transition-all duration-300 hover:shadow-lg ${
-                  i === 1
-                    ? "border-[#A0C82E] bg-[#A0C82E]/10 shadow-lg scale-105"
-                    : "border-gray-200 bg-white"
-                }`}
-              >
-                {i === 1 && (
-                  <div className="inline-block bg-[#A0C82E] text-white text-xs font-bold px-3 py-1 rounded-full mb-3">
-                    Más Popular
-                  </div>
-                )}
-                <h3 className="text-xl font-bold text-[#A0C82E] mb-1">{plan.name}</h3>
-                <p className="text-2xl font-extrabold text-[#0F3853] mb-2">{plan.price}</p>
-                <p className="text-sm text-gray-600 mb-4">{plan.description}</p>
-                <ul className="space-y-1">
-                  {plan.features.slice(0, 4).map((f, j) => (
-                    <li key={j} className="flex items-start gap-2 text-sm text-gray-700">
-                      <span className="text-[#A0C82E] mt-0.5">✓</span>
-                      {f}
-                    </li>
-                  ))}
-                  {plan.features.length > 4 && (
-                    <li className="text-xs text-gray-400 mt-2">
-                      +{plan.features.length - 4} características más
-                    </li>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+            {myManagPlansMock.map((plan, i) => {
+              const isPopular = i === 1;
+              return (
+                <div
+                  key={i}
+                  className={`rounded-2xl p-6 border text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
+                    isPopular
+                      ? "border-[#A0C82E] bg-[#A0C82E]/8 shadow-sm"
+                      : "border-gray-100 bg-white"
+                  }`}
+                >
+                  {isPopular && (
+                    <div className="inline-block bg-[#A0C82E] text-white text-[10px] font-bold px-3 py-0.5 rounded-full mb-3 tracking-wide">
+                      Más Popular
+                    </div>
                   )}
-                </ul>
-              </div>
-            ))}
+                  <h3 className="text-base font-bold text-[#A0C82E] mb-1">{plan.name}</h3>
+                  <p className="text-2xl font-extrabold text-[#0F3853] mb-1">{plan.price}</p>
+                  <p className="text-xs text-gray-400 mb-4 leading-relaxed">{plan.description}</p>
+                  <ul className="space-y-2">
+                    {plan.features.slice(0, 4).map((f, j) => (
+                      <li key={j} className="flex items-start gap-2 text-sm text-gray-600">
+                        <Check className="w-3.5 h-3.5 text-[#A0C82E] mt-0.5 flex-shrink-0" strokeWidth={2.5} />
+                        {f}
+                      </li>
+                    ))}
+                    {plan.features.length > 4 && (
+                      <li className="text-xs text-gray-400 mt-1 pl-5">
+                        +{plan.features.length - 4} características más
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
+
           <Button
-            className="bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-5 px-12 text-lg rounded-lg shadow-lg hover:scale-105 transition-all duration-300"
+            className="bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-3 px-8 text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
             onClick={() => navigate("/planes-sistema?system=MYMANAG")}
           >
             Ver todos los planes
@@ -254,20 +287,26 @@ const SystemDetail: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA final */}
-      <section className="py-20 px-4 bg-gradient-to-br from-[#0f3853] via-[#0d4a6b] to-[#0f3853] text-white text-center">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      {/* ── CTA ──────────────────────────────────────────────── */}
+      <section className="py-24 px-4 bg-[#0f3853] text-white text-center relative overflow-hidden">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(160,200,46,0.12) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="max-w-lg mx-auto relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
             Empieza a controlar tu inventario hoy
           </h2>
-          <p className="text-gray-200 mb-10 text-lg">
+          <p className="text-white/55 mb-10 text-base leading-relaxed">
             Prueba MyManag gratis por 7 días. Sin tarjeta de crédito.
           </p>
           <Button
-            className="bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-5 px-12 text-lg rounded-lg shadow-lg hover:scale-105 transition-all duration-300"
-            onClick={() =>
-              navigate("/registrar-empresa?plan=prueba&system=MYMANAG")
-            }
+            className="bg-[#A0C82E] hover:bg-[#8BB429] text-white font-semibold py-3 px-8 text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+            onClick={() => navigate("/registrar-empresa?plan=prueba&system=MYMANAG")}
           >
             Probar MyManag gratis
           </Button>
