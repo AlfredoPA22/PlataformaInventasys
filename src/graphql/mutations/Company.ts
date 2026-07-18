@@ -66,6 +66,17 @@ export const ACTIVATE_COMPANY = gql`
   }
 `;
 
+export const DELETE_COMPANY_PERMANENTLY = gql`
+  mutation DeleteCompanyPermanently($companyId: ID!, $confirmationText: String!) {
+    deleteCompanyPermanently(
+      companyId: $companyId
+      confirmationText: $confirmationText
+    ) {
+      success
+    }
+  }
+`;
+
 export const ADJUST_SUBSCRIPTION = gql`
   mutation AdjustSubscription(
     $companyId: String!

@@ -60,3 +60,33 @@ export const LIST_COMPANY_ADMIN = gql`
     }
   }
 `;
+
+export const COMPANY_DELETION_REPORT = gql`
+  query CompanyDeletionReport($companyId: ID!) {
+    companyDeletionReport(companyId: $companyId) {
+      companyName
+      products
+      brands
+      categories
+      providers
+      clients
+      warehouses
+      roles
+      users
+      saleOrders
+      saleOrderDetails
+      purchaseOrders
+      purchaseOrderDetails
+      salePayments
+      saleReturns
+      saleReturnDetails
+      productTransfers
+      productTransferDetails
+      productInventory
+      productSerials
+      notifications
+      payments
+      codeGenerators
+    }
+  }
+`;

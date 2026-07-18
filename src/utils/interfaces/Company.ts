@@ -40,6 +40,32 @@ export interface ICompany {
   subscriptions?: ICompanySubscription[];
 }
 
+export interface ICompanyDeletionReport {
+  companyName: string;
+  products: number;
+  brands: number;
+  categories: number;
+  providers: number;
+  clients: number;
+  warehouses: number;
+  roles: number;
+  users: number;
+  saleOrders: number;
+  saleOrderDetails: number;
+  purchaseOrders: number;
+  purchaseOrderDetails: number;
+  salePayments: number;
+  saleReturns: number;
+  saleReturnDetails: number;
+  productTransfers: number;
+  productTransferDetails: number;
+  productInventory: number;
+  productSerials: number;
+  notifications: number;
+  payments: number;
+  codeGenerators: number;
+}
+
 export interface ICompanyWithPayment {
   _id: string;
   name: string;

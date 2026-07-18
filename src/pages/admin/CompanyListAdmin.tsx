@@ -25,17 +25,46 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ADJUST_SUBSCRIPTION } from "@/graphql/mutations/Company";
-import { LIST_COMPANY_ADMIN } from "@/graphql/queries/Company";
+import { ADJUST_SUBSCRIPTION, DELETE_COMPANY_PERMANENTLY } from "@/graphql/mutations/Company";
+import { COMPANY_DELETION_REPORT, LIST_COMPANY_ADMIN } from "@/graphql/queries/Company";
 import useCompanyListAdmin from "@/hooks/useCompanyListAdmin";
 import { setIsBlocked } from "@/redux/slices/blockUISlice";
 import { getDate } from "@/utils/getDate";
-import type { ICompanySubscription, ICompanyWithPayment } from "@/utils/interfaces/Company";
-import { useMutation } from "@apollo/client";
+import type {
+  ICompanyDeletionReport,
+  ICompanySubscription,
+  ICompanyWithPayment,
+} from "@/utils/interfaces/Company";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+
+const REPORT_LABELS: Record<keyof Omit<ICompanyDeletionReport, "companyName">, string> = {
+  products: "Productos",
+  brands: "Marcas",
+  categories: "Categorías",
+  providers: "Proveedores",
+  clients: "Clientes",
+  warehouses: "Almacenes",
+  roles: "Roles",
+  users: "Usuarios",
+  saleOrders: "Órdenes de venta",
+  saleOrderDetails: "Detalles de venta",
+  purchaseOrders: "Órdenes de compra",
+  purchaseOrderDetails: "Detalles de compra",
+  salePayments: "Pagos de venta",
+  saleReturns: "Devoluciones",
+  saleReturnDetails: "Detalles de devolución",
+  productTransfers: "Transferencias",
+  productTransferDetails: "Detalles de transferencia",
+  productInventory: "Inventario",
+  productSerials: "Seriales",
+  notifications: "Notificaciones",
+  payments: "Pagos a Inventasys",
+  codeGenerators: "Contadores de código",
+};
 
 const STATUS_LABELS: Record<string, string> = {
   activo: "Activo",
@@ -193,6 +222,55 @@ const CompanyListAdmin = () => {
   const [adjustSubscription, { loading: adjusting }] = useMutation(ADJUST_SUBSCRIPTION, {
     refetchQueries: [{ query: LIST_COMPANY_ADMIN }],
   });
+
+  // Delete company dialog state
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteCompanyTarget, setDeleteCompanyTarget] = useState<ICompanyWithPayment | null>(null);
+  const [confirmText, setConfirmText] = useState("");
+
+  const [fetchDeletionReport, { data: deletionReportData, loading: loadingReport }] =
+    useLazyQuery<{ companyDeletionReport: ICompanyDeletionReport }>(COMPANY_DELETION_REPORT, {
+      fetchPolicy: "network-only",
+    });
+
+  const [deleteCompanyPermanently, { loading: deleting }] = useMutation(
+    DELETE_COMPANY_PERMANENTLY,
+    { refetchQueries: [{ query: LIST_COMPANY_ADMIN }] }
+  );
+
+  const openDeleteDialog = (company: ICompanyWithPayment) => {
+    setDeleteCompanyTarget(company);
+    setConfirmText("");
+    setDeleteOpen(true);
+    fetchDeletionReport({ variables: { companyId: company._id } });
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteCompanyTarget) return;
+    try {
+      dispatch(setIsBlocked(true));
+      await deleteCompanyPermanently({
+        variables: { companyId: deleteCompanyTarget._id, confirmationText: confirmText },
+      });
+      toast.success("Empresa eliminada permanentemente");
+      setDeleteOpen(false);
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : String(error);
+      toast.error(msg);
+    } finally {
+      dispatch(setIsBlocked(false));
+    }
+  };
+
+  const report = deletionReportData?.companyDeletionReport;
+  const reportEntries = report
+    ? (Object.keys(REPORT_LABELS) as (keyof typeof REPORT_LABELS)[])
+        .map((key) => ({ key, label: REPORT_LABELS[key], count: report[key] }))
+        .filter((entry) => entry.count > 0)
+    : [];
+  const reportTotal = reportEntries.reduce((sum, entry) => sum + entry.count, 0);
+  const canConfirmDelete =
+    !!deleteCompanyTarget && confirmText.trim() === deleteCompanyTarget.name;
 
   const companies: ICompanyWithPayment[] = listCompanyAdmin ?? [];
 
@@ -455,6 +533,13 @@ const CompanyListAdmin = () => {
                           >
                             Ajustar
                           </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => openDeleteDialog(company)}
+                          >
+                            Eliminar
+                          </Button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -590,6 +675,80 @@ const CompanyListAdmin = () => {
             </Button>
             <Button onClick={handleAdjustSubmit} disabled={adjusting}>
               {adjusting ? "Guardando..." : "Guardar cambios"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete company dialog */}
+      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-red-600">Eliminar empresa permanentemente</DialogTitle>
+            {deleteCompanyTarget && (
+              <p className="text-sm text-gray-500 mt-1">{deleteCompanyTarget.name}</p>
+            )}
+          </DialogHeader>
+
+          <div className="space-y-4 py-2">
+            {loadingReport && (
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                Calculando qué se va a eliminar...
+              </div>
+            )}
+
+            {!loadingReport && report && (
+              <div className="rounded-md border border-red-100 bg-red-50 p-3 space-y-2">
+                <p className="text-sm font-medium text-red-800">
+                  Esta acción eliminará permanentemente:
+                </p>
+                {reportEntries.length === 0 ? (
+                  <p className="text-sm text-red-700">
+                    Esta empresa no tiene datos asociados (ni productos, ni ventas, ni usuarios).
+                  </p>
+                ) : (
+                  <ul className="text-sm text-red-700 space-y-0.5">
+                    {reportEntries.map((entry) => (
+                      <li key={entry.key}>
+                        {entry.count} {entry.label.toLowerCase()}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <p className="text-xs text-red-600 font-medium pt-1 border-t border-red-200">
+                  Total: {reportTotal} registro{reportTotal !== 1 ? "s" : ""} + la empresa misma.
+                  Esta acción no se puede deshacer.
+                </p>
+              </div>
+            )}
+
+            {!loadingReport && deleteCompanyTarget && (
+              <div className="space-y-1.5">
+                <Label>
+                  Escribe <span className="font-semibold">{deleteCompanyTarget.name}</span> para
+                  confirmar
+                </Label>
+                <Input
+                  value={confirmText}
+                  onChange={(e) => setConfirmText(e.target.value)}
+                  placeholder={deleteCompanyTarget.name}
+                  autoComplete="off"
+                />
+              </div>
+            )}
+          </div>
+
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setDeleteOpen(false)} disabled={deleting}>
+              Cancelar
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDeleteConfirm}
+              disabled={!canConfirmDelete || deleting || loadingReport}
+            >
+              {deleting ? "Eliminando..." : "Eliminar permanentemente"}
             </Button>
           </DialogFooter>
         </DialogContent>
