@@ -1,11 +1,13 @@
 import { useState } from "react";
 import CompanyListAdmin from "./CompanyListAdmin";
 import SystemsAdmin from "./SystemsAdmin";
+import UserListAdmin from "./UserListAdmin";
 
-type AdminTab = "empresas" | "sistemas";
+type AdminTab = "empresas" | "usuarios" | "sistemas";
 
 const TAB_LABELS: Record<AdminTab, string> = {
   empresas: "Empresas",
+  usuarios: "Usuarios",
   sistemas: "Sistemas",
 };
 
@@ -31,6 +33,7 @@ const AdminLayout = () => {
               }`}
             >
               {tab === "empresas" && "🏢 "}
+              {tab === "usuarios" && "👤 "}
               {tab === "sistemas" && "⚙️ "}
               {TAB_LABELS[tab]}
             </button>
@@ -39,6 +42,7 @@ const AdminLayout = () => {
       </div>
 
       {activeTab === "empresas" && <CompanyListAdmin />}
+      {activeTab === "usuarios" && <UserListAdmin />}
       {activeTab === "sistemas" && <SystemsAdmin />}
     </div>
   );

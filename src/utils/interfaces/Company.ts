@@ -7,6 +7,7 @@ export interface ICompanySubscription {
   trial_expires_at?: string;
   subscription_expires_at?: string;
   notified_before_expiration?: boolean;
+  latest_payment?: Pick<IPayment, "_id" | "status" | "paid_at" | "plan" | "system"> | null;
 }
 
 export interface ICompanyInput {

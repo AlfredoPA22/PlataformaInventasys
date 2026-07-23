@@ -19,7 +19,7 @@ import { CompanyPlan } from "@/utils/enums/companyPlan.enum";
 import { CompanyStatus } from "@/utils/enums/companyStatus.enum";
 import { PaymentStatus } from "@/utils/enums/paymentStatus.enum";
 import { getDate } from "@/utils/getDate";
-import type { ICompany, ICompanyWithPayment } from "@/utils/interfaces/Company";
+import type { ICompanySubscription, ICompanyWithPayment } from "@/utils/interfaces/Company";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -55,11 +55,21 @@ const paymentConfig: Record<string, { label: string; cls: string }> = {
   [PaymentStatus.REJECTED]: { label: "Rechazado",cls: "bg-red-50    text-red-600    border-red-200"      },
 };
 
+const SYSTEM_LABELS: Record<string, string> = {
+  MYMANAG: "MyManag",
+  RESERVAYA: "ReservaYa",
+};
+
 const Badge: React.FC<{ cls: string; label: string }> = ({ cls, label }) => (
   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${cls}`}>
     {label}
   </span>
 );
+
+interface CompanySubscriptionRow {
+  company: ICompanyWithPayment;
+  subscription: ICompanySubscription;
+}
 
 /* ── Component ───────────────────────────────────────────────────── */
 
@@ -67,7 +77,7 @@ const MyAccount = () => {
   const user = useSelector((state: RootState) => state.authSlice);
   const navigate = useNavigate();
 
-  const [selectedCompany, setSelectedCompany] = useState<ICompanyWithPayment | null>(null);
+  const [selectedRow, setSelectedRow] = useState<CompanySubscriptionRow | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   const { listCompany, loadingListCompany } = useCompanyList();
@@ -75,15 +85,18 @@ const MyAccount = () => {
   const getSuperiorPlans = (currentPlan: string): string[] => {
     const order: string[] = [CompanyPlan.FREE, CompanyPlan.BASIC, CompanyPlan.PRO];
     const currentIndex = order.indexOf(currentPlan);
+    if (currentIndex === -1) return [];
     return order.slice(currentIndex + 1);
   };
 
-  const getRemainingDays = (company: ICompany): number => {
+  const getExpiresAt = (subscription: ICompanySubscription) =>
+    subscription.plan === CompanyPlan.FREE
+      ? subscription.trial_expires_at
+      : subscription.subscription_expires_at;
+
+  const getRemainingDays = (subscription: ICompanySubscription): number => {
     const now = new Date();
-    const rawDate =
-      company.plan === CompanyPlan.FREE
-        ? company.trial_expires_at
-        : company.subscription_expires_at;
+    const rawDate = getExpiresAt(subscription);
     const expiresAt =
       rawDate && !isNaN(Number(rawDate)) ? new Date(Number(rawDate)) : null;
     if (!expiresAt || isNaN(expiresAt.getTime())) return 0;
@@ -91,9 +104,9 @@ const MyAccount = () => {
     return Math.max(Math.ceil(diff / (1000 * 60 * 60 * 24)), 0);
   };
 
-  const DaysCell: React.FC<{ company: ICompanyWithPayment }> = ({ company }) => {
-    if (company.status === "inactivo") return <span className="text-gray-400">—</span>;
-    const days = getRemainingDays(company);
+  const DaysCell: React.FC<{ subscription: ICompanySubscription }> = ({ subscription }) => {
+    if (subscription.status === "inactivo") return <span className="text-gray-400">—</span>;
+    const days = getRemainingDays(subscription);
     if (days === 0)
       return <span className="inline-flex items-center gap-1 text-red-600 text-xs font-semibold"><AlertCircle className="w-3.5 h-3.5" />Expirado</span>;
     const cls =
@@ -114,6 +127,31 @@ const MyAccount = () => {
       </div>
     );
   }
+
+  // Aplana cada empresa en una fila por sistema — una empresa puede tener
+  // MyManag y ReservaYa a la vez, cada uno con su propio plan/estado/pago,
+  // así que ya no se pueden mostrar juntos en una sola fila con un solo
+  // "Último pago"/plan/estado como antes.
+  const rows: CompanySubscriptionRow[] = listCompany.flatMap((company: ICompanyWithPayment) => {
+    if (company.subscriptions && company.subscriptions.length > 0) {
+      return company.subscriptions.map((subscription) => ({ company, subscription }));
+    }
+    // Empresas antiguas sin array de subscripciones: se arma una a partir de
+    // los campos legacy de MyManag para no dejarlas fuera de la lista.
+    return [
+      {
+        company,
+        subscription: {
+          system: "MYMANAG",
+          plan: company.plan,
+          status: company.status,
+          trial_expires_at: company.trial_expires_at as unknown as string,
+          subscription_expires_at: company.subscription_expires_at as unknown as string,
+          latest_payment: company.latest_payment,
+        },
+      },
+    ];
+  });
 
   return (
     <div className="min-h-screen bg-slate-50/60 py-10 px-4">
@@ -200,7 +238,7 @@ const MyAccount = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-slate-50 border-b border-gray-100">
-                      {["Empresa", "Correo", "Expira", "Días rest.", "Estado", "Plan", "Último pago", "Acciones"].map((h) => (
+                      {["Empresa", "Sistema", "Correo", "Expira", "Días rest.", "Estado", "Plan", "Último pago", "Acciones"].map((h) => (
                         <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wide whitespace-nowrap">
                           {h}
                         </th>
@@ -208,27 +246,29 @@ const MyAccount = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
-                    {listCompany.map((company: ICompanyWithPayment) => {
-                      const isInactive = company.status === "inactivo";
-                      const expiresAt =
-                        company.plan === CompanyPlan.FREE
-                          ? company.trial_expires_at
-                          : company.subscription_expires_at;
-                      const days = getRemainingDays(company);
-                      const statusC = statusConfig[company.status] ?? { label: company.status, cls: "bg-gray-100 text-gray-500 border-gray-200" };
-                      const planC   = planConfig[company.plan]   ?? { label: company.plan,   cls: "bg-gray-100 text-gray-500 border-gray-200" };
-                      const latestPay = company.latest_payment?.status;
+                    {rows.map(({ company, subscription }) => {
+                      const isInactive = subscription.status === "inactivo";
+                      const expiresAt = getExpiresAt(subscription);
+                      const days = getRemainingDays(subscription);
+                      const statusC = statusConfig[subscription.status] ?? { label: subscription.status, cls: "bg-gray-100 text-gray-500 border-gray-200" };
+                      const planC   = planConfig[subscription.plan]   ?? { label: subscription.plan,   cls: "bg-gray-100 text-gray-500 border-gray-200" };
+                      const latestPay = subscription.latest_payment?.status;
                       const payC    = latestPay ? paymentConfig[latestPay] : null;
 
                       return (
-                        <tr key={company._id} className="hover:bg-slate-50/70 transition-colors duration-150">
+                        <tr key={`${company._id}-${subscription.system}`} className="hover:bg-slate-50/70 transition-colors duration-150">
                           <td className="px-4 py-3 font-medium text-gray-800 whitespace-nowrap">{company.name}</td>
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            <span className="text-xs font-medium text-gray-500">
+                              {SYSTEM_LABELS[subscription.system] ?? subscription.system}
+                            </span>
+                          </td>
                           <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{company.email}</td>
                           <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
-                            {!isInactive ? getDate(expiresAt) : <span className="text-gray-300">—</span>}
+                            {!isInactive ? getDate(expiresAt as unknown as Date) : <span className="text-gray-300">—</span>}
                           </td>
                           <td className="px-4 py-3">
-                            <DaysCell company={company} />
+                            <DaysCell subscription={subscription} />
                           </td>
                           <td className="px-4 py-3">
                             <Badge cls={statusC.cls} label={statusC.label} />
@@ -254,30 +294,30 @@ const MyAccount = () => {
                                 Pagos
                               </Button>
 
-                              {(company.status === CompanyStatus.EXPIRED ||
-                                (company.status === CompanyStatus.PENDING && !company.latest_payment) ||
-                                (days <= 3 && company.plan !== CompanyPlan.FREE)) &&
-                                company.plan !== CompanyPlan.FREE &&
-                                company.latest_payment?.status !== PaymentStatus.REVIEW && (
+                              {(subscription.status === CompanyStatus.EXPIRED ||
+                                (subscription.status === CompanyStatus.PENDING && !subscription.latest_payment) ||
+                                (days <= 3 && subscription.plan !== CompanyPlan.FREE)) &&
+                                subscription.plan !== CompanyPlan.FREE &&
+                                subscription.latest_payment?.status !== PaymentStatus.REVIEW && (
                                   <Button
                                     size="sm"
                                     className="h-7 text-xs bg-[#A0C82E] hover:bg-[#8BB429] text-white gap-1"
-                                    onClick={() => navigate("/pago", { state: { company, plan: company.plan } })}
+                                    onClick={() => navigate("/pago", { state: { company, plan: subscription.plan, system: subscription.system } })}
                                   >
                                     <Clock className="w-3 h-3" />
                                     Pagar
                                   </Button>
                                 )}
 
-                              {company.plan !== CompanyPlan.PRO &&
-                                company.latest_payment?.status !== PaymentStatus.REVIEW && (
+                              {subscription.plan !== CompanyPlan.PRO &&
+                                subscription.latest_payment?.status !== PaymentStatus.REVIEW && (
                                   <Button
                                     size="sm"
                                     variant="secondary"
                                     className="h-7 text-xs gap-1"
                                     onClick={() => {
-                                      setSelectedCompany(company);
-                                      setSelectedPlan(getSuperiorPlans(company.plan)[0]);
+                                      setSelectedRow({ company, subscription });
+                                      setSelectedPlan(getSuperiorPlans(subscription.plan)[0] ?? null);
                                     }}
                                   >
                                     <ArrowUpRight className="w-3 h-3" />
@@ -295,24 +335,24 @@ const MyAccount = () => {
 
               {/* Mobile cards */}
               <div className="md:hidden divide-y divide-gray-100">
-                {listCompany.map((company: ICompanyWithPayment) => {
-                  const isInactive = company.status === "inactivo";
-                  const expiresAt =
-                    company.plan === CompanyPlan.FREE
-                      ? company.trial_expires_at
-                      : company.subscription_expires_at;
-                  const days = getRemainingDays(company);
-                  const statusC = statusConfig[company.status] ?? { label: company.status, cls: "bg-gray-100 text-gray-500 border-gray-200" };
-                  const planC   = planConfig[company.plan]   ?? { label: company.plan,   cls: "bg-gray-100 text-gray-500 border-gray-200" };
-                  const latestPay = company.latest_payment?.status;
+                {rows.map(({ company, subscription }) => {
+                  const isInactive = subscription.status === "inactivo";
+                  const expiresAt = getExpiresAt(subscription);
+                  const days = getRemainingDays(subscription);
+                  const statusC = statusConfig[subscription.status] ?? { label: subscription.status, cls: "bg-gray-100 text-gray-500 border-gray-200" };
+                  const planC   = planConfig[subscription.plan]   ?? { label: subscription.plan,   cls: "bg-gray-100 text-gray-500 border-gray-200" };
+                  const latestPay = subscription.latest_payment?.status;
                   const payC    = latestPay ? paymentConfig[latestPay] : null;
 
                   return (
-                    <div key={company._id} className="p-5 space-y-4">
+                    <div key={`${company._id}-${subscription.system}`} className="p-5 space-y-4">
                       <div className="flex items-start justify-between gap-2">
                         <div>
                           <p className="font-semibold text-gray-800">{company.name}</p>
                           <p className="text-xs text-gray-400 mt-0.5">{company.email}</p>
+                          <p className="text-[11px] font-medium text-gray-400 mt-0.5">
+                            {SYSTEM_LABELS[subscription.system] ?? subscription.system}
+                          </p>
                         </div>
                         <Badge cls={statusC.cls} label={statusC.label} />
                       </div>
@@ -324,11 +364,11 @@ const MyAccount = () => {
                         </div>
                         <div className="bg-slate-50 rounded-lg p-3">
                           <p className="text-gray-400 mb-1">Días restantes</p>
-                          {!isInactive ? <DaysCell company={company} /> : <span className="text-gray-300">—</span>}
+                          {!isInactive ? <DaysCell subscription={subscription} /> : <span className="text-gray-300">—</span>}
                         </div>
                         <div className="bg-slate-50 rounded-lg p-3">
                           <p className="text-gray-400 mb-1">Expira</p>
-                          <p className="text-gray-700">{!isInactive ? getDate(expiresAt) : "—"}</p>
+                          <p className="text-gray-700">{!isInactive ? getDate(expiresAt as unknown as Date) : "—"}</p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-3">
                           <p className="text-gray-400 mb-1">Último pago</p>
@@ -347,30 +387,30 @@ const MyAccount = () => {
                           Ver Pagos
                         </Button>
 
-                        {(company.status === CompanyStatus.EXPIRED ||
-                          (company.status === CompanyStatus.PENDING && !company.latest_payment) ||
-                          (days <= 3 && company.plan !== CompanyPlan.FREE)) &&
-                          company.plan !== CompanyPlan.FREE &&
-                          company.latest_payment?.status !== PaymentStatus.REVIEW && (
+                        {(subscription.status === CompanyStatus.EXPIRED ||
+                          (subscription.status === CompanyStatus.PENDING && !subscription.latest_payment) ||
+                          (days <= 3 && subscription.plan !== CompanyPlan.FREE)) &&
+                          subscription.plan !== CompanyPlan.FREE &&
+                          subscription.latest_payment?.status !== PaymentStatus.REVIEW && (
                             <Button
                               size="sm"
                               className="text-xs bg-[#A0C82E] hover:bg-[#8BB429] text-white gap-1"
-                              onClick={() => navigate("/pago", { state: { company, plan: company.plan } })}
+                              onClick={() => navigate("/pago", { state: { company, plan: subscription.plan, system: subscription.system } })}
                             >
                               <Clock className="w-3 h-3" />
                               Registrar Pago
                             </Button>
                           )}
 
-                        {company.plan !== CompanyPlan.PRO &&
-                          company.latest_payment?.status !== PaymentStatus.REVIEW && (
+                        {subscription.plan !== CompanyPlan.PRO &&
+                          subscription.latest_payment?.status !== PaymentStatus.REVIEW && (
                             <Button
                               size="sm"
                               variant="secondary"
                               className="text-xs gap-1"
                               onClick={() => {
-                                setSelectedCompany(company);
-                                setSelectedPlan(getSuperiorPlans(company.plan)[0]);
+                                setSelectedRow({ company, subscription });
+                                setSelectedPlan(getSuperiorPlans(subscription.plan)[0] ?? null);
                               }}
                             >
                               <ArrowUpRight className="w-3 h-3" />
@@ -387,7 +427,7 @@ const MyAccount = () => {
         </div>
 
         {/* ── Change plan dialog ───────────────────────────────── */}
-        <Dialog open={!!selectedCompany} onOpenChange={() => setSelectedCompany(null)}>
+        <Dialog open={!!selectedRow} onOpenChange={() => setSelectedRow(null)}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle className="text-[#0F3853]">Cambio de Plan</DialogTitle>
@@ -400,14 +440,17 @@ const MyAccount = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-400">Empresa</p>
-                  <p className="text-sm font-semibold text-gray-800">{selectedCompany?.name}</p>
+                  <p className="text-sm font-semibold text-gray-800">{selectedRow?.company.name}</p>
+                  <p className="text-xs text-gray-400">
+                    {selectedRow ? (SYSTEM_LABELS[selectedRow.subscription.system] ?? selectedRow.subscription.system) : ""}
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
                 <div>
                   <p className="text-xs text-gray-400">Plan actual</p>
-                  <p className="text-sm font-semibold capitalize text-gray-800">{selectedCompany?.plan}</p>
+                  <p className="text-sm font-semibold capitalize text-gray-800">{selectedRow?.subscription.plan}</p>
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-[#A0C82E]" />
                 <div className="text-right">
@@ -431,8 +474,8 @@ const MyAccount = () => {
                     <SelectValue placeholder="Selecciona un plan" />
                   </SelectTrigger>
                   <SelectContent>
-                    {selectedCompany &&
-                      getSuperiorPlans(selectedCompany.plan).map((plan) => (
+                    {selectedRow &&
+                      getSuperiorPlans(selectedRow.subscription.plan).map((plan) => (
                         <SelectItem key={plan} value={plan}>
                           {plan.charAt(0).toUpperCase() + plan.slice(1).toLowerCase()}
                         </SelectItem>
@@ -446,7 +489,7 @@ const MyAccount = () => {
               <Button
                 variant="outline"
                 className="text-sm"
-                onClick={() => setSelectedCompany(null)}
+                onClick={() => setSelectedRow(null)}
               >
                 Cancelar
               </Button>
@@ -454,8 +497,14 @@ const MyAccount = () => {
                 disabled={!selectedPlan}
                 className="bg-[#0F3853] hover:bg-[#0d2f44] text-white text-sm gap-2"
                 onClick={() => {
-                  navigate("/pago", { state: { company: selectedCompany, plan: selectedPlan } });
-                  setSelectedCompany(null);
+                  navigate("/pago", {
+                    state: {
+                      company: selectedRow?.company,
+                      plan: selectedPlan,
+                      system: selectedRow?.subscription.system,
+                    },
+                  });
+                  setSelectedRow(null);
                 }}
               >
                 <CreditCard className="w-4 h-4" />
