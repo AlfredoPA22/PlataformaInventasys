@@ -90,3 +90,9 @@ export const COMPANY_DELETION_REPORT = gql`
     }
   }
 `;
+
+export const COMPANY_BACKUP = gql`
+  query CompanyBackup($companyId: ID!) {
+    companyBackup(companyId: $companyId)
+  }
+`;

@@ -26,7 +26,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ADJUST_SUBSCRIPTION, DELETE_COMPANY_PERMANENTLY } from "@/graphql/mutations/Company";
-import { COMPANY_DELETION_REPORT, LIST_COMPANY_ADMIN } from "@/graphql/queries/Company";
+import { COMPANY_BACKUP, COMPANY_DELETION_REPORT, LIST_COMPANY_ADMIN } from "@/graphql/queries/Company";
 import useCompanyListAdmin from "@/hooks/useCompanyListAdmin";
 import { setIsBlocked } from "@/redux/slices/blockUISlice";
 import { getDate } from "@/utils/getDate";
@@ -237,6 +237,39 @@ const CompanyListAdmin = () => {
     DELETE_COMPANY_PERMANENTLY,
     { refetchQueries: [{ query: LIST_COMPANY_ADMIN }] }
   );
+
+  // Backup
+  const [fetchCompanyBackup] = useLazyQuery<{ companyBackup: string }>(COMPANY_BACKUP, {
+    fetchPolicy: "network-only",
+  });
+  const [backingUpId, setBackingUpId] = useState<string | null>(null);
+
+  const handleBackup = async (company: ICompanyWithPayment) => {
+    try {
+      setBackingUpId(company._id);
+      const { data } = await fetchCompanyBackup({ variables: { companyId: company._id } });
+      const json = data?.companyBackup;
+      if (!json) throw new Error("No se pudo generar el backup");
+
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const safeName = company.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      const dateStr = new Date().toISOString().slice(0, 10);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `backup-${safeName}-${dateStr}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success("Backup generado y descargado");
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : String(error);
+      toast.error(msg);
+    } finally {
+      setBackingUpId(null);
+    }
+  };
 
   const openDeleteDialog = (company: ICompanyWithPayment) => {
     setDeleteCompanyTarget(company);
@@ -532,6 +565,15 @@ const CompanyListAdmin = () => {
                             onClick={() => openAdjustDialog(company)}
                           >
                             Ajustar
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-emerald-600 border-emerald-200 hover:bg-emerald-50"
+                            disabled={backingUpId === company._id}
+                            onClick={() => handleBackup(company)}
+                          >
+                            {backingUpId === company._id ? "Generando..." : "Backup"}
                           </Button>
                           <Button
                             size="sm"
